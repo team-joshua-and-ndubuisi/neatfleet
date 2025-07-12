@@ -25,14 +25,14 @@ const searchUsers = async ({
   firstName,
   lastName,
   email,
-  page,
-  limit,
+  page = 1,
+  limit = 10,
 }: {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
 }) => {
   try {
     const users = await prismaClient.user.findMany({
@@ -68,4 +68,23 @@ const createUser = async (name: string, email: string) => {
   }
 };
 
-export default { getUserById, getAllUsers, createUser, searchUsers };
+const findUserByEmail = async (email: string) => {
+  try {
+    const user = await prismaClient.user.findUnique({
+      where: { email },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(
+      `Error fetching user with email ${email}: ${error.message}`
+    );
+  }
+};
+
+export default {
+  getUserById,
+  getAllUsers,
+  createUser,
+  searchUsers,
+  findUserByEmail,
+};

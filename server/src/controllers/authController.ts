@@ -7,6 +7,8 @@ import { NextFunction, Request, Response } from "express";
 import prisma from "../config/prisma"; //connection to Prisma client
 const User = prisma.user; // dealing with only user table
 
+import userService from "../services/userService";
+
 import { ExtendedErrorT } from "../types/error";
 
 // @desc    Register new user
@@ -17,7 +19,8 @@ const registerUser = asyncHandler(
     const { firstName, lastName, email, password } = req.body;
     logger.info("Attempting to register user", { firstName, lastName, email });
 
-    const userExists = await User.findUnique({ where: { email } });
+    // const userExists = await User.findUnique({ where: { email } });
+    const userExists = await userService.findUserByEmail(email);
 
     if (userExists) {
       logger.warn(
