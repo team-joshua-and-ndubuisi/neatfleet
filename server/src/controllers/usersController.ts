@@ -4,6 +4,7 @@ const logger = require("../config/logger");
 import { Request, Response, NextFunction } from "express";
 import { ExtendedErrorT } from "../types/error";
 import prisma from "../config/prisma";
+import userService from "../services/userService";
 
 const User = prisma.user; // dealing with only user table
 
@@ -25,24 +26,16 @@ const searchUsers = asyncHandler(
     const targetLastName = lastName ? String(lastName) : "";
     const targetEmail = email ? String(email) : "";
 
-    const currentPage = isNaN(Number(page)) ? 1 : Number(page);
-    const queryLimit = isNaN(Number(limit)) ? 10 : Number(limit);
+    const currentPage = !Number(page) ? 1 : Number(page);
+    const queryLimit = !Number(limit) ? 10 : Number(limit);
 
-    const users = await User.findMany({
-      orderBy: [{ last_name: "asc" }, { first_name: "asc" }],
-      skip: (currentPage - 1) * queryLimit,
-      take: queryLimit,
-      where: {
-        OR: [
-          { first_name: { contains: targetFirstName, mode: "insensitive" } },
-          { last_name: { contains: targetLastName, mode: "insensitive" } },
-          { email: { contains: targetEmail, mode: "insensitive" } },
-        ],
-      },
+    const users = await userService.searchUsers({
+      firstName: targetFirstName,
+      lastName: targetLastName,
+      email: targetEmail,
+      page: currentPage,
+      limit: queryLimit,
     });
-    // orderBy({ last_name: "asc", first_name: "asc" })
-    //   .skip((page - 1) * limit)
-    //   .take(limit);
 
     res.status(200).json({ users });
   }
@@ -53,7 +46,7 @@ const searchUsers = asyncHandler(
 // @access  Private
 const getUsers = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const users = await User.findMany();
+    const users = await userService.getAllUsers();
     res.status(200).json({ users });
   }
 );
@@ -64,9 +57,7 @@ const getUsers = asyncHandler(
 const getSingleUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
-    const user = await User.findUnique({
-      where: { id: userId },
-    });
+    const user = await userService.getUserById(userId);
 
     if (!user) {
       logger.warn(`User not found with id ${req.params.userId}`);

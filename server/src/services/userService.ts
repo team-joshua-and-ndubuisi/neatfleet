@@ -1,3 +1,4 @@
+import { NextFunction } from "express";
 import prismaClient from "../config/prisma"; // Ensure your db connection is set up correctly
 
 const getUserById = async (id: string) => {
@@ -20,6 +21,39 @@ const getAllUsers = async () => {
   }
 };
 
+const searchUsers = async ({
+  firstName,
+  lastName,
+  email,
+  page,
+  limit,
+}: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  page: number;
+  limit: number;
+}) => {
+  try {
+    const users = await prismaClient.user.findMany({
+      orderBy: [{ last_name: "asc" }, { first_name: "asc" }],
+      skip: (page - 1) * limit,
+      take: limit,
+      where: {
+        OR: [
+          { first_name: { contains: firstName, mode: "insensitive" } },
+          { last_name: { contains: lastName, mode: "insensitive" } },
+          { email: { contains: email, mode: "insensitive" } },
+        ],
+      },
+    });
+
+    return users;
+  } catch (error: any) {
+    throw new Error(`Error fetching users: ${error.message}`);
+  }
+};
+
 const createUser = async (name: string, email: string) => {
   try {
     const user = await prismaClient.user.create({
@@ -34,4 +68,4 @@ const createUser = async (name: string, email: string) => {
   }
 };
 
-export default { getUserById, getAllUsers, createUser };
+export default { getUserById, getAllUsers, createUser, searchUsers };
