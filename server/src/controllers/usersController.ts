@@ -58,7 +58,6 @@ const getSingleUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
     const user = await userService.getUserById(userId);
-
     if (!user) {
       logger.warn(`User not found with id ${req.params.userId}`);
       const error: ExtendedErrorT = new Error("No user found");

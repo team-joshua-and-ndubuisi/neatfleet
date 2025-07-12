@@ -1,4 +1,9 @@
-const { body, param, validationResult } = require("express-validator");
+import {
+  body,
+  param,
+  validationResult,
+  ValidationError,
+} from "express-validator";
 import { Request, Response, NextFunction } from "express";
 
 const firstNameValidator = body("firstName")
@@ -34,11 +39,13 @@ const contentValidator = body("content")
   .withMessage("Please include content.");
 
 const postIdValidator = param("postId")
-  .isMongoId()
+  // .isMongoId()
+  .notEmpty()
   .withMessage("Invalid post ID");
 
 const userIdValidator = param("userId")
-  .isMongoId()
+  .notEmpty()
+  // .isMongoId()
   .withMessage("Invalid user ID");
 
 const checkValidations = async (
@@ -48,11 +55,15 @@ const checkValidations = async (
 ) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    // console.log("errors", errors);
     return res.status(400).json({
-      errors: errors.array().map((err: { param: string; msg: string }) => ({
-        field: err.param,
-        message: err.msg,
-      })),
+      errors: errors.array().map((err) => {
+        return {
+          message: err.msg,
+          //@ts-expect-error path does exist on ValidationError
+          field: err.path,
+        };
+      }),
     });
   }
   return next();
