@@ -24,7 +24,7 @@ For more details about the development setup and Vite-specific configurations, s
 
 ## Getting Started
 
-1. Install dependencies:
+1. Install dependencies :
 
    ```bash
    npm install
@@ -253,7 +253,7 @@ export interface PostsState {
 Before moving on, take a look in the src/features/posts directory. Notice that not only was our types file was created, but we also have an index file which barrel exports the types from this directory. This makes import this code much cleaner and consistent. If we are to add types in the future with the generate:type script, this index file will be updated automatically.
 
 ```ts
-export * from './postTypes';
+export * from "./postTypes";
 ```
 
 #### Generating API
@@ -263,10 +263,10 @@ Next we will begin the API generator. Press enter to confirm the filename for th
 You will again be prompted to confirm the code generated:
 
 ```ts
-import { axiosInstance } from '~/api';
-import type { PostType } from '../types';
+import { axiosInstance } from "~/api";
+import type { PostType } from "../types";
 
-const url = '/posts';
+const url = "/posts";
 
 export const fetchPosts = async (): Promise<PostType[]> => {
   const response = await axiosInstance.get(url);
@@ -279,7 +279,7 @@ export const fetchPostById = async (id: string): Promise<PostType | null> => {
 };
 
 export const createPost = async (
-  newPost: Omit<PostType, 'id'>
+  newPost: Omit<PostType, "id">
 ): Promise<PostType> => {
   const response = await axiosInstance.post(url, newPost);
   return response.data;
@@ -301,75 +301,75 @@ export const deletePost = async (id: string): Promise<void> => {
 Again, after the file is created an index file is used for barrel exporting:
 
 ```ts
-export * from './postsApi';
+export * from "./postsApi";
 ```
 
 After this, you are prompted for hooks associated with each API function. Press enter for each prompt and confirmation.
 
 ```ts
-import { useQuery } from '@tanstack/react-query';
-import { fetchPosts } from '../api/postsApi';
+import { useQuery } from "@tanstack/react-query";
+import { fetchPosts } from "../api/postsApi";
 
 export const useFetchPosts = () => {
   return useQuery({
-    queryKey: ['posts'],
+    queryKey: ["posts"],
     queryFn: fetchPosts,
   });
 };
 ```
 
 ```ts
-import { useQuery } from '@tanstack/react-query';
-import { fetchPostById } from '../api/postsApi';
+import { useQuery } from "@tanstack/react-query";
+import { fetchPostById } from "../api/postsApi";
 
 export const useFetchPostById = (id: string) => {
   return useQuery({
-    queryKey: ['post', id],
+    queryKey: ["post", id],
     queryFn: () => fetchPostById(id),
   });
 };
 ```
 
 ```ts
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createPost } from '../api/postsApi';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createPost } from "../api/postsApi";
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createPost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 };
 ```
 
 ```ts
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updatePost } from '../api/postsApi';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updatePost } from "../api/postsApi";
 
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updatePost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 };
 ```
 
 ```ts
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deletePost } from '../api/postsApi';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deletePost } from "../api/postsApi";
 
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 };
@@ -378,11 +378,11 @@ export const useDeletePost = () => {
 And again, an index file for barrel exporting is generated:
 
 ```ts
-export * from './useCreatePost';
-export * from './useDeletePost';
-export * from './useFetchPostById';
-export * from './useFetchPosts';
-export * from './useUpdatePost';
+export * from "./useCreatePost";
+export * from "./useDeletePost";
+export * from "./useFetchPostById";
+export * from "./useFetchPosts";
+export * from "./useUpdatePost";
 ```
 
 #### Generating a Slice
@@ -390,8 +390,8 @@ export * from './useUpdatePost';
 The slice generation script will start next. Confirm the filename and name prop as in prior prompts. When it asks for a type for the initial state, we are going to use the one we created in our types file: PostsState. The only field will be 'arePostsDisplayed' and we'll set the value to false. Type 'n' to finish adding fields and confirm the output code:
 
 ```ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { PostsState } from '../types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { PostsState } from "../types";
 
 const initialState: PostsState = {
   // Define initial state structure here
@@ -399,7 +399,7 @@ const initialState: PostsState = {
 };
 
 const postsSlice = createSlice({
-  name: 'posts',
+  name: "posts",
   initialState,
   reducers: {
     // Define reducers here
@@ -421,9 +421,9 @@ Notice that the boilerplate code is incomplete. We'll need to add our reducers a
 The next prompt will ask about including this slice in the Redux store. Press enter to say yes. This is the only time Scaffolder will alter code outside of the feature directory. Our store will now include our new slice:
 
 ```ts
-import { combineReducers } from '@reduxjs/toolkit';
-import { counterSlice } from '~/features/counter';
-import { postsSlice } from '~/features/posts';
+import { combineReducers } from "@reduxjs/toolkit";
+import { counterSlice } from "~/features/counter";
+import { postsSlice } from "~/features/posts";
 
 export const reducers = combineReducers({
   counterSlice: counterSlice,
@@ -434,8 +434,8 @@ export const reducers = combineReducers({
 And just like with our API, we will need a custom hook for our slice. This time, however, we will rename it rather than use the generated filename. Type 'n' when prompted for the filename 'usePosts' and instead type in 'useDisplayPosts'. Like with our slice, this generated hook will need some work but the boilerplate got us started:
 
 ```ts
-import { useAppSelector, useAppDispatch } from '~/store';
-import /* actions from slice */ '../slices';
+import { useAppSelector, useAppDispatch } from "~/store";
+import /* actions from slice */ "../slices";
 
 export const useDisplayPosts = () => {
   const appDispatch = useAppDispatch();
@@ -454,12 +454,12 @@ export const useDisplayPosts = () => {
 Type enter to confirm. Notice our index file has been updated:
 
 ```ts
-export * from './useCreatePost';
-export * from './useDeletePost';
-export * from './useDisplayPosts';
-export * from './useFetchPostById';
-export * from './useFetchPosts';
-export * from './useUpdatePost';
+export * from "./useCreatePost";
+export * from "./useDeletePost";
+export * from "./useDisplayPosts";
+export * from "./useFetchPostById";
+export * from "./useFetchPosts";
+export * from "./useUpdatePost";
 ```
 
 #### Generating Components
@@ -475,9 +475,9 @@ Before we start generating components, let's take a moment and think about the s
 Let's change the name of our first component to 'Post'. We will include a single prop, 'post', and the type will be our PostType we generated earlier. We then need to import this type. This component will not use a hook. Confirm the generated code:
 
 ```tsx
-import React from 'react';
+import React from "react";
 
-import type { PostType } from '../types';
+import type { PostType } from "../types";
 
 interface PostProps {
   post?: PostType;
@@ -499,9 +499,9 @@ Here again, we will need to do some work to get this code just right.
 Let's generate another component, 'PostsContainer'. It will not need any props but it will use the PostType type. We also will use a hook, useFetchPosts. Confirm the code generated:
 
 ```tsx
-import React from 'react';
-import { useFetchPosts } from '../hooks';
-import type { PostType } from '../types';
+import React from "react";
+import { useFetchPosts } from "../hooks";
+import type { PostType } from "../types";
 
 const PostsContainer: React.FC = () => {
   const fetchposts = useFetchPosts();
@@ -551,9 +551,9 @@ src/features/posts/
 We'll start with the individual Post component. We'll change the imports to include some pre-built components from the Material UI library (should already be installed):
 
 ```tsx
-import React from 'react';
-import type { PostType } from '../types';
-import { Card, Stack, Typography } from '@mui/material';
+import React from "react";
+import type { PostType } from "../types";
+import { Card, Stack, Typography } from "@mui/material";
 ```
 
 Then we'll use those MUI components to display some of the post's details (we also made the prop mandatory):
@@ -566,10 +566,10 @@ interface PostProps {
 const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <Card sx={{ px: 4, py: 3 }}>
-      <Stack direction='column' gap={2}>
-        <Typography variant='h5'>{post.title}</Typography>
-        <Typography variant='h6'>{post.user}</Typography>
-        <Typography variant='body1'>{post.content}</Typography>
+      <Stack direction="column" gap={2}>
+        <Typography variant="h5">{post.title}</Typography>
+        <Typography variant="h6">{post.user}</Typography>
+        <Typography variant="body1">{post.content}</Typography>
       </Stack>
     </Card>
   );
@@ -581,12 +581,12 @@ export default Post;
 Next let's work on the PostsContainer component. Change the imports to include a Stack component from MUI, the Post component we just worked on, and a couple components from our template for loading and errors:
 
 ```tsx
-import React from 'react';
-import { useFetchPosts } from '../hooks';
-import type { PostType } from '../types';
-import { Stack } from '@mui/material';
-import Post from './Post';
-import { ErrorComponent, LoadingIndicator } from '~/components';
+import React from "react";
+import { useFetchPosts } from "../hooks";
+import type { PostType } from "../types";
+import { Stack } from "@mui/material";
+import Post from "./Post";
+import { ErrorComponent, LoadingIndicator } from "~/components";
 ```
 
 We will destructure the useFetchPosts hook, check for isLoading or error, and if the posts data is there, map over them creating individual Post components:
@@ -599,7 +599,7 @@ const PostsContainer: React.FC = () => {
   if (error) return <ErrorComponent />;
 
   return (
-    <Stack direction='column' gap={2}>
+    <Stack direction="column" gap={2}>
       {posts?.map((post: PostType) => (
         <Post key={post.id} post={post} />
       ))}
@@ -613,14 +613,14 @@ export default PostsContainer;
 Next we'll import components from MUI and our PostsContainer:
 
 ```tsx
-import { Stack, Typography } from '@mui/material';
-import React from 'react';
-import PostsContainer from './PostsContainer';
+import { Stack, Typography } from "@mui/material";
+import React from "react";
+import PostsContainer from "./PostsContainer";
 
 const Posts: React.FC = () => {
   return (
-    <Stack direction='column' gap={2} mt={4}>
-      <Typography variant='h4'>Posts</Typography>
+    <Stack direction="column" gap={2} mt={4}>
+      <Typography variant="h4">Posts</Typography>
       <PostsContainer />
     </Stack>
   );
@@ -632,18 +632,18 @@ export default Posts;
 And finally, we will import our Posts component to the About page:
 
 ```tsx
-import React from 'react';
-import { Typography, Container } from '@mui/material';
-import { texts } from '~/data';
-import { Posts } from '~/features/posts';
+import React from "react";
+import { Typography, Container } from "@mui/material";
+import { texts } from "~/data";
+import { Posts } from "~/features/posts";
 
 const AboutPage: React.FC = () => {
   return (
     <Container sx={{ mt: 8 }}>
-      <Typography variant='h4' mb={2}>
+      <Typography variant="h4" mb={2}>
         About this template...
       </Typography>
-      <Typography variant='body1'>{texts.about}</Typography>
+      <Typography variant="body1">{texts.about}</Typography>
       <Posts />
     </Container>
   );
@@ -657,15 +657,15 @@ Our posts should now be displayed.
 But we want to be able to hide and show the posts. And it would also be good to be able to delete posts (since clearly they're not always nice). Let's start by finishing the slice that was generated:
 
 ```ts
-import { createSlice } from '@reduxjs/toolkit';
-import type { PostsState } from '../types';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PostsState } from "../types";
 
 const initialState: PostsState = {
   arePostsDisplayed: false,
 };
 
 const postsSlice = createSlice({
-  name: 'posts',
+  name: "posts",
   initialState,
   reducers: {
     displayPosts: (state) => {
@@ -685,8 +685,8 @@ export default postsSlice.reducer;
 And now we'll adjust the useDisplayPosts hook:
 
 ```ts
-import { useAppSelector, useAppDispatch } from '~/store';
-import { displayPosts, hidePosts } from '../slices';
+import { useAppSelector, useAppDispatch } from "~/store";
+import { displayPosts, hidePosts } from "../slices";
 
 export const useDisplayPosts = () => {
   const appDispatch = useAppDispatch();
@@ -707,9 +707,9 @@ export const useDisplayPosts = () => {
 Now we'll add a button from MUI to our AboutPage and import the useDisplayPosts hook so we can toggle the display of the posts:
 
 ```tsx
-import { Button, Typography, Container } from '@mui/material';
-import { texts } from '~/data';
-import { Posts, useDisplayPosts } from '~/features/posts';
+import { Button, Typography, Container } from "@mui/material";
+import { texts } from "~/data";
+import { Posts, useDisplayPosts } from "~/features/posts";
 
 function AboutPage() {
   const { arePostsDisplayed, displayPosts, hidePosts } = useDisplayPosts();
@@ -719,12 +719,12 @@ function AboutPage() {
 
   return (
     <Container sx={{ mt: 8 }}>
-      <Typography variant='h4' mb={2}>
+      <Typography variant="h4" mb={2}>
         About this template...
       </Typography>
-      <Typography variant='body1'>{texts.about}</Typography>
+      <Typography variant="body1">{texts.about}</Typography>
       <Button onClick={handleDisplayPostsClick}>
-        {arePostsDisplayed ? 'Hide ' : 'Show '}Posts
+        {arePostsDisplayed ? "Hide " : "Show "}Posts
       </Button>
       {arePostsDisplayed && <Posts />}
     </Container>
@@ -737,11 +737,11 @@ export default AboutPage;
 Lastly, let's alter our Post component so we can delete it. We'll import some MUI components and icons as well as our useDeletePost hook:
 
 ```tsx
-import React from 'react';
-import type { PostType } from '../types';
-import { Card, IconButton, Stack, Typography } from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useDeletePost } from '../hooks';
+import React from "react";
+import type { PostType } from "../types";
+import { Card, IconButton, Stack, Typography } from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useDeletePost } from "../hooks";
 
 interface PostProps {
   post: PostType;
@@ -752,15 +752,15 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
   return (
     <Card sx={{ px: 4, py: 3 }}>
-      <Stack direction='column' gap={2}>
-        <Stack direction='row' justifyContent='space-between'>
-          <Typography variant='h5'>{post.title}</Typography>
+      <Stack direction="column" gap={2}>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography variant="h5">{post.title}</Typography>
           <IconButton onClick={() => deletePost(post.id)}>
-            <DeleteForeverIcon color='warning' />
+            <DeleteForeverIcon color="warning" />
           </IconButton>
         </Stack>
-        <Typography variant='h6'>{post.user}</Typography>
-        <Typography variant='body1'>{post.content}</Typography>
+        <Typography variant="h6">{post.user}</Typography>
+        <Typography variant="body1">{post.content}</Typography>
       </Stack>
     </Card>
   );
@@ -791,7 +791,7 @@ export default tseslint.config({
   languageOptions: {
     // other options...
     parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
       tsconfigRootDir: import.meta.dirname,
     },
   },
@@ -804,11 +804,11 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react';
+import react from "eslint-plugin-react";
 
 export default tseslint.config({
   // Set the react version
-  settings: { react: { version: '18.3' } },
+  settings: { react: { version: "18.3" } },
   plugins: {
     // Add the react plugin
     react,
@@ -817,7 +817,7 @@ export default tseslint.config({
     // other rules...
     // Enable its recommended rules
     ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
+    ...react.configs["jsx-runtime"].rules,
   },
 });
 ```
