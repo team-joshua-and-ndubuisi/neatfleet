@@ -4,8 +4,7 @@ import passport from "passport";
 import { Strategy, ExtractJwt, StrategyOptions } from "passport-jwt";
 // import User from "../models/user";
 
-import prisma from "./prisma";
-const User = prisma.user;
+import userService from "../services/userService";
 
 const rootDir = process.cwd();
 const pathToKey = path.join(rootDir, "id_rsa_pub.pem");
@@ -17,7 +16,8 @@ const options: StrategyOptions = {
 };
 
 const strategy = new Strategy(options, (payload, done) => {
-  User.findUnique({ where: { id: payload.sub } })
+  userService
+    .getUserById(payload.sub)
     .then((user) => {
       if (user) {
         return done(null, user);
