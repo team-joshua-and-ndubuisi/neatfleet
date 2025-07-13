@@ -7,8 +7,8 @@ const rootDir = process.cwd();
 const pathToPrivKey = path.join(rootDir, "id_rsa_priv.pem");
 const PRIV_KEY = fs.readFileSync(pathToPrivKey, "utf8");
 
-function issueJWT(user: { _id: string }) {
-  const _id = user._id;
+function issueJWT(user: { id: string }) {
+  const _id = user.id;
 
   const expiresIn = "2h";
 
@@ -27,6 +27,4 @@ function issueJWT(user: { _id: string }) {
   };
 }
 
-module.exports = {
-  issueJWT,
-};
+export { issueJWT };

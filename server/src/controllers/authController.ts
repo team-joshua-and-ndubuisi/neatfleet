@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
-const { issueJWT } = require("../lib/issueJWT");
+import { issueJWT } from "../lib/issueJWT";
 const { logger } = require("../config/logger");
 
 import { NextFunction, Request, Response } from "express";
@@ -32,16 +32,14 @@ const registerUser = asyncHandler(
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword: string = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        password: hashedPassword,
-        is_admin: false,
-      },
+    const user = await userService.createUser({
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      password: hashedPassword,
+      is_admin: false,
     });
 
     if (!user) {
@@ -64,7 +62,7 @@ const registerUser = asyncHandler(
         isAdmin: user.is_admin,
       },
       token: tokenData.token,
-      expiresIn: tokenData.expiresIn,
+      expiresIn: tokenData.expires,
     });
   }
 );
@@ -77,7 +75,8 @@ const loginUser = asyncHandler(
     const { email, password } = req.body;
     logger.info(`Attempting to login user with ${email}...`);
 
-    const user = await User.findUnique({ where: { email } });
+    const user = await userService.findUserByEmail(email);
+    // const user = await User.findUnique({ where: { email } });
 
     if (!user) {
       logger.warn(`No user exists with email ${email}`);
@@ -110,7 +109,7 @@ const loginUser = asyncHandler(
         isAdmin: user.is_admin,
       },
       token: tokenData.token,
-      expiresIn: tokenData.expiresIn,
+      expiresIn: tokenData.expires,
     });
   }
 );
@@ -120,14 +119,17 @@ const loginUser = asyncHandler(
 // @access  Private
 const userProfile = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    logger.info(`Attempting to find user with id ${req.body.user._id}`);
+    const userId = req.body.user.id;
+    logger.info(`Attempting to find user with id ${userId}...`);
+
     const user = await User.findUnique({
-      where: { id: req.body.user._id },
+      omit: { password: true, is_admin: true }, // Exclude password and is_admin from the response
+      where: { id: userId },
       // select: { password: false },
     });
 
     if (!user) {
-      logger.warn(`No user found with id ${req.body.user._id}`);
+      logger.warn(`No user found with id ${userId}`);
       const error: ExtendedErrorT = new Error("No user found");
       error.statusCode = 404;
       return next(error);

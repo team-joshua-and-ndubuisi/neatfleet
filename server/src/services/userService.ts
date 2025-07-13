@@ -54,12 +54,27 @@ const searchUsers = async ({
   }
 };
 
-const createUser = async (name: string, email: string) => {
+const createUser = async ({
+  email,
+  password,
+  first_name,
+  last_name,
+  is_admin = false,
+}: {
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  is_admin: boolean;
+}) => {
   try {
     const user = await prismaClient.user.create({
       data: {
-        first_name: name,
+        first_name,
+        last_name,
         email,
+        password,
+        is_admin,
       },
     });
     return user;
