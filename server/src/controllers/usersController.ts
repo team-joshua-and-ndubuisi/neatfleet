@@ -67,4 +67,19 @@ const getSingleUser = asyncHandler(
   }
 );
 
-export { searchUsers, getUsers, getSingleUser };
+const deleteUserById = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.body.userId;
+    const user = await userService.deleteUserById(userId);
+    if (!user) {
+      logger.warn(`User not found with id ${userId}`);
+      const error: ExtendedErrorT = new Error("No user found");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    res.status(200).json({ user });
+  }
+);
+
+export { searchUsers, getUsers, getSingleUser, deleteUserById };
