@@ -120,7 +120,7 @@ const userProfile = asyncHandler(
     const userId = req.body.user.id;
     logger.info(`Attempting to find user with id ${userId}...`);
 
-    const user = await userService.getUserProfile(userId);
+    const user = await userService.getUserProfileById(userId);
 
     if (!user) {
       logger.warn(`No user found with id ${userId}`);

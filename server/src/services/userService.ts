@@ -96,7 +96,8 @@ const findUserByEmail = async (email: string) => {
     );
   }
 };
-const getUserProfile = async (userId: string) => {
+
+const getUserProfileById = async (userId: string) => {
   try {
     const user = await prismaClient.user.findUnique({
       omit: { password: true, is_admin: true },
@@ -126,9 +127,21 @@ const editProfile = async (userId: string, userData: {}) => {
   }
 };
 
+const deleteUserById = async (id: string) => {
+  try {
+    const user = await prismaClient.user.delete({
+      where: { id },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(`Error deleting user with ID ${id}: ${error.message}`);
+  }
+};
+
 export default {
+  deleteUserById,
   editProfile,
-  getUserProfile,
+  getUserProfileById,
   getUserById,
   getAllUsers,
   createUser,
