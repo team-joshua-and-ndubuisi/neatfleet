@@ -1,0 +1,68 @@
+name: CI/CD for Client
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/**"
+  pull_request:
+    paths:
+      - "client/**"
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Run ESLint
+        working-directory: ./server
+        run: npm run lint
+
+      - name: Build Project
+        working-directory: ./server
+        run: npm run build
+
+  deploy:
+    needs: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Build project
+        working-directory: ./server
+        run: npm run build
+
+      - name: Deploy to Vercel
+        working-directory: ./server
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel --prod --token $VERCEL_TOKEN
