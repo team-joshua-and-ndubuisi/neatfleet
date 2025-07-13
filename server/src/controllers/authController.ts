@@ -146,15 +146,13 @@ const editProfile = asyncHandler(
       error.statusCode = 401;
       return next(error);
     }
-    //@ts-expect-error user will need to be authenticated before this route is hit _id will exist
-    const userId = req.user._id;
+    //@ts-expect-error user will need to be authenticated before this route is hit id will exist
+    const userId = req.user.id;
 
     const { firstName, lastName, email, currentPassword, newPassword } =
       req.body;
 
-    const user = await User.findUnique({
-      where: { id: userId },
-    });
+    const user = await userService.getUserById(userId);
 
     if (!user) {
       logger.warn(`No user found with id ${userId}`);
@@ -190,11 +188,11 @@ const editProfile = asyncHandler(
       user.password = await bcrypt.hash(newPassword, salt);
     }
 
-    await User.update({
-      where: { id: userId },
-      data: {
-        ...user,
-      },
+    await userService.editProfile(userId, {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      password: user.password,
     });
 
     logger.info(`User profile updated for id ${userId}`);
@@ -218,7 +216,7 @@ const editProfile = asyncHandler(
 const deleteProfile = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     //@ts-expect-error user will need to be authenticated before this route is hit _id will exist
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const user = await User.findUnique({
       where: { id: userId },

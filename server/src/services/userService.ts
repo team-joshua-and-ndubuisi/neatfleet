@@ -110,7 +110,24 @@ const getUserProfile = async (userId: string) => {
   }
 };
 
+const editProfile = async (userId: string, userData: {}) => {
+  try {
+    const user = await prismaClient.user.update({
+      where: { id: userId },
+      data: {
+        ...userData,
+      },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(
+      `Error fetching user profile with ID ${userId}: ${error.message}`
+    );
+  }
+};
+
 export default {
+  editProfile,
   getUserProfile,
   getUserById,
   getAllUsers,
