@@ -122,11 +122,7 @@ const userProfile = asyncHandler(
     const userId = req.body.user.id;
     logger.info(`Attempting to find user with id ${userId}...`);
 
-    const user = await User.findUnique({
-      omit: { password: true, is_admin: true }, // Exclude password and is_admin from the response
-      where: { id: userId },
-      // select: { password: false },
-    });
+    const user = await userService.getUserProfile(userId);
 
     if (!user) {
       logger.warn(`No user found with id ${userId}`);

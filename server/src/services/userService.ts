@@ -1,5 +1,6 @@
 import { NextFunction } from "express";
 import prismaClient from "../config/prisma"; // Ensure your db connection is set up correctly
+import { getuid } from "process";
 
 const getUserById = async (id: string) => {
   try {
@@ -95,8 +96,22 @@ const findUserByEmail = async (email: string) => {
     );
   }
 };
+const getUserProfile = async (userId: string) => {
+  try {
+    const user = await prismaClient.user.findUnique({
+      omit: { password: true, is_admin: true },
+      where: { id: userId },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(
+      `Error fetching user profile with ID ${userId}: ${error.message}`
+    );
+  }
+};
 
 export default {
+  getUserProfile,
   getUserById,
   getAllUsers,
   createUser,
