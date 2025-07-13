@@ -6,8 +6,6 @@ import { ExtendedErrorT } from "../types/error";
 import prisma from "../config/prisma";
 import userService from "../services/userService";
 
-const User = prisma.user; // dealing with only user table
-
 // @desc    Search users
 // @route   GET /search
 // @access  Private
