@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    {
+      "id": "2",
+      "name": "Jane Doe",
+      "email": "jane@example.com"
+    },
+    {
+      "id": "3",
+      "name": "Andrew Smith",
+      "email": "meuzishun@gmail.com"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "title": "Scaffolder is the GOAT 🐐",
+      "content": "Just tried out the Scaffolder, and wow, it’s like having a personal assistant for your codebase. I typed one command, and boom 💥—it built an entire feature while I made coffee.\n\nWho needs sleep-deprived late-night coding sessions when you’ve got a tool that practically writes your app for you? If this keeps up, I’ll be out of a job… or maybe promoted to 'Chief Scaffolding Officer' 🤓. Either way, 10/10 would scaffold again!",
+      "user": "CodeLover99"
+    },
+    {
+      "id": "2",
+      "title": "Another bloated tool 🙄",
+      "content": "Scaffolder? More like Scuffle-der. I gave it a shot, and now my project’s directory looks like a file hoarder’s dream. Do I really need 10 different files just to add a button? What’s next? A template for writing comments?\n\nHonestly, this is just overengineering for the sake of it. Back in my day, we copy-pasted everything like true warriors. But hey, if you enjoy pretending you’re a code wizard while a script does the real work, go for it. 🙃",
+      "user": "GrumpyDev42"
+    }
+  ]
+}
