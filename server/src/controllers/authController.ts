@@ -4,8 +4,6 @@ import { issueJWT } from "../lib/issueJWT";
 const { logger } = require("../config/logger");
 
 import { NextFunction, Request, Response } from "express";
-import prisma from "../config/prisma"; //connection to Prisma client
-const User = prisma.user; // dealing with only user table
 
 import userService from "../services/userService";
 
@@ -218,9 +216,7 @@ const deleteProfile = asyncHandler(
     //@ts-expect-error user will need to be authenticated before this route is hit _id will exist
     const userId = req.user.id;
 
-    const user = await User.findUnique({
-      where: { id: userId },
-    });
+    const user = await userService.getUserById(userId);
 
     if (!user) {
       logger.warn(`No user found with id ${userId}`);
@@ -229,7 +225,7 @@ const deleteProfile = asyncHandler(
       return next(error);
     }
 
-    await User.delete({ where: { id: userId } });
+    await userService.deleteUserById(userId);
 
     logger.info(`User deleted with id ${userId}`);
 
