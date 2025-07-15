@@ -8,7 +8,8 @@
     "start": "npm run build && node dist/server.js",
     "build": "npx prisma generate && tsc",
     "dev": "ts-node src/server.ts",
-    "vercel-build": "npm run build"
+    "generate-keys": "ts-node src/lib/generateKeyPair.ts",
+    "vercel-build": "npm run generate-keys && npx prisma generate && tsc"
   },
   "repository": {
     "type": "git",
