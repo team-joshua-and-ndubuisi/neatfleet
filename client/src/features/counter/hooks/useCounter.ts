@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch } from '~/store';
+import { useAppSelector, useAppDispatch } from '@/store';
 import { increment, decrement, incrementByAmount } from '../slices';
 
 export const useCounter = () => {

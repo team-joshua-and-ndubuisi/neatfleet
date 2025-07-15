@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from '@mui/material';
-import { UserType, useUsers, User } from '~/features/users';
-import { LoadingIndicator, ErrorComponent } from '~/components';
+import { UserType, useUsers, User } from '@/features/users';
+import { LoadingIndicator, ErrorComponent } from '@/oldComponents';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, error } = useUsers();
