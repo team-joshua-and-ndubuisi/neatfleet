@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Container } from '@mui/material';
-import { texts } from '~/data';
+import { texts } from '@/data';
 
 const AboutPage: React.FC = () => {
   return (

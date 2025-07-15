@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Stack, Typography } from '@mui/material';
-import { UserList } from '~/features/users';
+import { UserList } from '@/features/users';
 
 const ContactPage: React.FC = () => {
   return (

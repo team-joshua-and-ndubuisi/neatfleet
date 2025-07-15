@@ -9,7 +9,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { NavItemType } from '~/types';
+import { NavItemType } from '@/types';
 
 interface NavBarProps {
   heading?: string;

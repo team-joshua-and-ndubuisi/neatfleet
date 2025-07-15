@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import { NavBar } from '~/components';
-import { navItems } from '~/data';
+import { NavBar } from '@/oldComponents';
+import { navItems } from '@/data';
 
 const MainLayout: React.FC = () => {
   return (
