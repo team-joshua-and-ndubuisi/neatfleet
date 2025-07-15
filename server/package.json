@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && node dist/server.js",
     "build": "npx prisma generate && tsc",
-    "dev": "ts-node src/server.ts",
+    "dev": "npx prisma generate && nodemon src/server.ts",
     "vercel-build": "npm run build"
   },
   "repository": {
