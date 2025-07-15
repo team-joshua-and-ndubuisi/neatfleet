@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Stack, IconButton, Typography } from '@mui/material';
 import { AddCircle, RemoveCircle } from '@mui/icons-material';
-import { useCounter } from '~/features/counter';
+import { useCounter } from '@/features/counter';
 
 const HomePage: React.FC = () => {
   const { counterValue, incrementCount, decrementCount } = useCounter();
