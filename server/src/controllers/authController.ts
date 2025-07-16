@@ -8,7 +8,7 @@ import prisma from "../config/prisma"; //connection to Prisma client
 import {User as UserType} from  "../../generated/prisma"; // dealing with only user table
 
 import { ExtendedErrorT } from "../types/error";
-
+import {createUser} from "../services/userService"
 const User = prisma.user
 
 // @desc    Register new user
@@ -33,15 +33,14 @@ const registerUser = asyncHandler(
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
-      data: {
+    const user = await createUser({
+       
         first_name: first_name,
         last_name: last_name,
         email,
         phone,
-        password: hashedPassword,
+        hashedPassword: hashedPassword,
 
-      },
     });
 
     if (!user) {

@@ -1,10 +1,19 @@
-PR Descriptions: Always include what was done, why, and how to test. Screenshot of the visual change is always reccommended. 
+### Description
+- Information on what the PR is trying to achieve
 
-Example PR Description:
+### Type of change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Improvement
 
-### Description:
-_Insert what was done, why, and how to test. Screenshot of the visual change is always reccommended._
+### How can this be tested (Please include visual illustrations if need be)
+- Step 1
+- Step 2
+
+### Documentation update checklist
+- [ ] I have made corresponding changes to the documentation
+- [ ] No documentation changes required
 
 
-### How to test:
-_Insert steps_
+### Link to corresponding ticket or issue
+- [Jira Link](https://yassahr.atlassian.net/jira/software/projects/TJN/boards/1)
