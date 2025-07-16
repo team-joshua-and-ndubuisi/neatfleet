@@ -49,8 +49,8 @@
     "json-server": "^1.0.0-beta.3",
     "tsx": "^4.19.2",
     "tw-animate-css": "^1.3.5",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.7.0",
+    "typescript": "~5.5.3",
+    "typescript-eslint": "^8.9.0",
     "vite": "^5.4.8"
   }
 }
