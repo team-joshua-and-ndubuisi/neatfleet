@@ -17,11 +17,6 @@
     "generate:component": "tsx scaffolder/scripts/generateComponent.ts"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@fontsource/roboto": "^5.1.0",
-    "@mui/icons-material": "^6.1.6",
-    "@mui/material": "^6.1.6",
     "@radix-ui/react-slot": "^1.2.3",
     "@reduxjs/toolkit": "^2.3.0",
     "@tailwindcss/vite": "^4.1.11",
