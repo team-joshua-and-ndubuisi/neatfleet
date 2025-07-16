@@ -1,15 +1,14 @@
 import React from 'react';
-import { Container, Stack, Typography } from '@mui/material';
-import { UserList } from '~/features/users';
+import { UserList } from '@/features/users';
 
 const ContactPage: React.FC = () => {
   return (
-    <Container sx={{ mt: 8 }}>
-      <Stack direction='column'>
-        <Typography variant='h4'>Users</Typography>
+    <div className='container mx-auto px-4 mt-8'>
+      <div className='flex flex-col space-y-4'>
+        <h1 className='text-3xl tracking-tight'>Users</h1>
         <UserList />
-      </Stack>
-    </Container>
+      </div>
+    </div>
   );
 };
 

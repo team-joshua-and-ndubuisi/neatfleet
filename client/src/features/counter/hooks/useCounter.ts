@@ -1,18 +1,12 @@
-import { useAppSelector, useAppDispatch } from '~/store';
-import { increment, decrement, incrementByAmount } from '../slices';
+import { useCounterStore } from '../stores';
 
 export const useCounter = () => {
-  const appDispatch = useAppDispatch();
-  const counterValue = useAppSelector((state) => state.counterSlice.value);
-  const incrementCount = () => appDispatch(increment());
-  const decrementCount = () => appDispatch(decrement());
-  const incrementCountBy = (value: number) =>
-    appDispatch(incrementByAmount(value));
+  const { value, increment, decrement, incrementByAmount } = useCounterStore();
 
   return {
-    counterValue,
-    incrementCount,
-    decrementCount,
-    incrementCountBy,
+    counterValue: value,
+    incrementCount: increment,
+    decrementCount: decrement,
+    incrementCountBy: incrementByAmount,
   };
 };

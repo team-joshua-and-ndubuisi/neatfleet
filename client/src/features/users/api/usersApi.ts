@@ -1,4 +1,4 @@
-import { axiosInstance } from '~/api';
+import { axiosInstance } from '@/api';
 import type { UserType } from '../types';
 
 const url = '/users';

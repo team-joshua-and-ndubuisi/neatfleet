@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-  AppBar,
-  Stack,
-  Typography,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { NavItemType } from '~/types';
+import { Button } from '@/components';
+import { NavItemType } from '@/types';
+import { cn } from '@/lib/utils';
 
 interface NavBarProps {
   heading?: string;
@@ -18,27 +11,36 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ heading, navItems }) => {
   return (
-    <AppBar position='static' component='nav'>
-      <Stack
-        direction='row'
-        sx={{ justifyContent: 'space-between', alignItems: 'center', mx: 4 }}
-      >
-        <Typography variant='h4'>{heading}</Typography>
-        <List sx={{ display: 'inline-flex' }}>
+    <nav className='bg-blue-500 text-primary-foreground shadow-md'>
+      <div className='flex justify-between items-center px-6 py-4'>
+        <h1 className='text-4xl'>{heading}</h1>
+        <ul className='flex space-x-2'>
           {navItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton
-                component={NavLink}
+            <li key={item.text}>
+              <NavLink
                 to={item.path}
-                sx={{ textAlign: 'center' }}
+                className={({ isActive }) =>
+                  cn(
+                    'inline-block',
+                    isActive ? 'bg-primary-foreground/20 rounded-md' : ''
+                  )
+                }
               >
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
+                <Button
+                  variant='ghost'
+                  className={cn(
+                    'text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground',
+                    'transition-colors duration-200 text-lg text-center'
+                  )}
+                >
+                  {item.text}
+                </Button>
+              </NavLink>
+            </li>
           ))}
-        </List>
-      </Stack>
-    </AppBar>
+        </ul>
+      </div>
+    </nav>
   );
 };
 

@@ -5,13 +5,13 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { MainLayout } from '~/layouts';
-import LoadingPage from '~/pages/LoadingPage';
+import { MainLayout } from '@/layouts';
+import LoadingPage from '@/pages/LoadingPage';
 
-const HomePage = lazy(() => import('~/pages/HomePage'));
-const AboutPage = lazy(() => import('~/pages/AboutPage'));
-const ContactPage = lazy(() => import('~/pages/ContactPage'));
-const NotFoundPage = lazy(() => import('~/pages/NotFoundPage'));
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const ContactPage = lazy(() => import('@/pages/ContactPage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 const AppRoutes: React.FC = () => {
   return (
