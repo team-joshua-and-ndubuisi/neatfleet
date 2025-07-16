@@ -1,823 +1,463 @@
-# Frontend Project Template
+# NeatFleet Frontend Template
 
-## About This Template
+A modern, scalable React frontend template built with TypeScript, featuring a feature-based architecture and cutting-edge development tools.
 
-This is a scalable, feature-based frontend template for React applications, designed with TypeScript, Redux, axios, and react-query, with a bonus 'scaffolder' app which automates the generation of new features.
+## 🚀 Quick Start
 
-## Table of Contents
-
-- [Getting Started](#getting-started)
-- [Architecture Overview](#architecture-overview)
-- [Scaffolder](#scaffolder)
-
-### Additional Documentation
-
-For more details about the development setup and Vite-specific configurations, see the [React + TypeScript + Vite](#react--typescript--vite) section.
-
-### Key Features
-
-- Modular structure for features and shared components.
-- State management using Redux.
-- API interaction and caching with axios and react-query.
-- Lazy loading with React Router.
-- Automated feature generation with Scaffolder
-
-## Getting Started
-
-1. Install dependencies :
+1. **Install dependencies:**
 
    ```bash
    npm install
    ```
 
-2. Start mocked server:
-
-   ```bash
-   npm run server
-   ```
-
-3. Start dev server:
+2. **Start the development server:**
 
    ```bash
    npm run dev
    ```
 
-## Architecture Overview
+3. **Start the mock API server:**
+   ```bash
+   npm run server
+   ```
 
-- Static Data: Stored in the data directory for constants and hardcoded information.
-- Mutable State: Managed with Redux in the store directory, allowing for scalable state management.
-- Persistent Data: Handled via API calls (using axios) and caching (with react-query) for backend data that persists across sessions. The database is mocked using the [json-server](https://www.npmjs.com/package/json-server) package (see db.json file).
+## 📚 Table of Contents
 
-### Project Structure
+- [Tech Stack](#tech-stack)
+- [Project Architecture](#project-architecture)
+- [Features Directory Structure](#features-directory-structure)
+- [Barrel Exports](#barrel-exports)
+- [UI Components with Shadcn](#ui-components-with-shadcn)
+- [State Management](#state-management)
+- [Data & Constants](#data--constants)
+- [Contributing Guidelines](#contributing-guidelines)
+- [Development Workflow](#development-workflow)
 
-Here's an overview of the project structure:
+## 🛠️ Tech Stack
 
-```bash
+- **Framework:** [React 18](https://react.dev/) with [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components:** [Shadcn/ui](https://ui.shadcn.com/)
+- **Routing:** [React Router](https://reactrouter.com/)
+- **Server State:** [TanStack Query](https://tanstack.com/query/latest)
+- **Client State:** [Zustand](https://zustand-demo.pmnd.rs/)
+- **HTTP Client:** [Axios](https://axios-http.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+
+## 🏗️ Project Architecture
+
+This template follows a **feature-based architecture** that promotes scalability, maintainability, and team collaboration. The structure is organized around business features rather than technical concerns.
+
+```
 src/
-├── App.tsx
-├── api
-│   ├── axios.ts
-│   └── index.ts
-├── components
-│   ├── ErrorComponent.tsx
-│   ├── LoadingIndicator.tsx
-│   ├── NavBar.tsx
-│   └── index.ts
-├── data
-│   ├── index.ts
-│   ├── navItems.ts
-│   └── texts.ts
-├── features
-│   ├── counter
-│   └── users
-├── layouts
-│   ├── MainLayout.tsx
-│   └── index.ts
-├── main.tsx
-├── pages
-│   ├── AboutPage.tsx
-│   ├── ContactPage.tsx
-│   ├── HomePage.tsx
-│   ├── LoadingPage.tsx
-│   └── NotFoundPage.tsx
-├── routes
-│   ├── index.ts
-│   └── routes.tsx
-├── store
-│   ├── hooks.ts
-│   ├── index.ts
-│   ├── reducers.ts
-│   └── store.ts
-├── theme
-│   ├── index.ts
-│   └── theme.ts
-├── types
-│   ├── index.ts
-│   └── navItemTypes.ts
-└── vite-env.d.ts
+├── api/                 # Global API configuration
+├── components/          # Shared UI components
+│   └── ui/             # Shadcn/ui components
+├── data/               # Static data and constants
+├── features/           # Feature-based modules
+│   ├── counter/        # Example feature
+│   └── users/          # Example feature
+├── layouts/            # Layout components
+├── lib/                # Utility functions
+├── pages/              # Page components
+├── routes/             # Routing configuration
+└── types/              # Global TypeScript types
 ```
 
-Each directory has a specific responsibility and most have an index file for [barrel exporting](https://4markdown.com/everything-about-barrel-exports-in-javascript/). The components, hooks, and types directories are meant to hold modules that will be used throughout the app by other features and therefore, have a more 'global' position in the architecture.
+## 🎯 Features Directory Structure
 
-Here are the directory structures for the template features (Counter and Users):
+Each feature is a self-contained module with its own concerns organized in subdirectories:
 
-```bash
-src/features/counter/
-├── components
-├── hooks
-│   ├── index.ts
-│   └── useCounter.ts
-├── index.ts
-├── slices
-│   ├── counterSlice.ts
-│   └── index.ts
-└── types
-    ├── counterStateTypes.ts
-    └── index.ts
 ```
-
-```bash
-src/features/users/
-├── api
-│   ├── index.ts
-│   └── usersApi.ts
-├── components
-│   ├── User.tsx
-│   ├── UserList.tsx
-│   └── index.ts
-├── hooks
-│   ├── index.ts
-│   └── useUsers.ts
-├── index.ts
-└── types
+src/features/[feature-name]/
+├── index.ts            # Barrel export file
+├── api/                # API calls and endpoints
+│   ├── index.ts
+│   └── [feature]Api.ts
+├── components/         # Feature-specific components
+│   ├── index.ts
+│   ├── [Component].tsx
+│   └── [Container].tsx
+├── hooks/              # Custom React hooks
+│   ├── index.ts
+│   └── use[Feature].ts
+├── stores/             # Zustand stores (client state)
+│   ├── index.ts
+│   └── [feature]Store.ts
+└── types/              # TypeScript interfaces
     ├── index.ts
-    └── userTypes.ts
+    └── [feature]Types.ts
 ```
 
-Each feature is a quasi-microcosm of the src directory, with its own types, api, slices, hooks, and components - all of which are optional based on the specifics of the feature.
+### Example: Users Feature
 
-Such a structure, as well organized as it might be, comes with a cost: every new feature desired comes with a tremendous overhead for setting up the directory structure. Wouldn't it be nice to have a way to automate the creation of these detailed and tedious to implement structures?
-
-## Scaffolder
-
-This template comes with an app for generating code. Outside the src directory, in the root directory is another directory: scaffolder. Here is the directory structure:
-
-```bash
-scaffolder/
-├── generateFeature.ts
-├── scripts
-│   ├── generateApi.ts
-│   ├── generateComponent.ts
-│   ├── generateHooks.ts
-│   ├── generateSlice.ts
-│   ├── generateTypes.ts
-│   └── index.ts
-├── templates
-│   ├── apiTemplate.ts
-│   ├── componentTemplate.ts
-│   ├── hookTemplate.ts
-│   ├── index.ts
-│   ├── sliceTemplate.ts
-│   └── typesTemplate.ts
-└── utils
-    ├── cliUtils.ts
-    ├── featureNameUtils.ts
-    ├── fileUtils.ts
-    ├── index.ts
-    ├── indexUtils.ts
-    └── stringUtils.ts
-```
-
-There are several scripts which can be run to generate different modules of a feature or the entire feature itself:
-
-```bash
-npm run generate:feature
-```
-
-```bash
-npm run generate:hook
-```
-
-```bash
-npm run generate:api
-```
-
-```bash
-npm run generate:slice
-```
-
-```bash
-npm run generate:type
-```
-
-```bash
-npm run generate:component
-```
-
-Each script will start a CLI with prompts asking for details about the feature to be generated.
-
-### Feature Generation Example
-
-Here is an example of a typical use case for the scaffolder. Start by running this terminal command from the root directory:
-
-```bash
-npm run generate:component
-```
-
-You will be prompted to name the feature. The mocked database (db.json) has an array of users and posts. The users data is already demonstrated in the template so we'll use the posts data. Type in 'posts' in the response to the prompt.
-
-#### Generating Types
-
-Next you will be asked a series of yes/no questions about which modules will be needed for this feature. Respond with yes to all four (type, API, slice, and components). You can just hit enter for yes. After confirming which modules will be needed, a new directory will be created in the features directory named whatever we typed in earlier (in our case, 'posts').
-
-Next, the type generation will begin. You will be prompted to confirm the filename for the types. Can can type 'n' for no and enter in a custom filename but the generated one ('postTypes.ts') is what we want. Press enter to confirm.
-
-Next you will be prompted for the interface name. Notice that again, the feature name was used to generate the name. Press enter again to confirm.
-
-Next we need to enter the fields for our type. For this we should look at the posts data in our mocked database:
-
-```json
-"posts": [
-    {
-      "id": "1",
-      "title": "Scaffolder is the GOAT 🐐",
-      "content": "Just tried out...",
-      "user": "CodeLover99"
-    },
-    {
-      "id": "2",
-      "title": "Another bloated tool 🙄",
-      "content": "Scaffolder? More like ...",
-      "user": "GrumpyDev42"
-    }
-  ]
-```
-
-Each post has an id, title, content, and user, all of which are strings. So we'll enter 'id' for our first field, enter 'string' for the type, and then hit enter to add another field. Do the same for title, content and user, then type 'n' when prompted for another field.
-
-The next prompt will ask about including a state interface. This will be used for the type of our slice's initial state. Hit enter to confirm and again to confirm the interface name. We are going to use the slice to hide/display the posts. When prompted for the field, type 'arePostsDisplayed' and set that to a boolean. Then type 'n' to finish. A print out of the code that will be generated will be displayed. Hit enter to confirm.
-
-```ts
-export interface PostType {
+```typescript
+// src/features/users/types/userTypes.ts
+export interface UserType {
   id: string;
-  title: string;
-  content: string;
-  user: string;
+  name: string;
+  email: string;
+  phone: string;
 }
 
-export interface PostsState {
-  arePostsDisplayed: boolean;
-}
-```
+// src/features/users/api/usersApi.ts
+import { axiosInstance } from '@/api';
+import type { UserType } from '../types';
 
-Before moving on, take a look in the src/features/posts directory. Notice that not only was our types file was created, but we also have an index file which barrel exports the types from this directory. This makes import this code much cleaner and consistent. If we are to add types in the future with the generate:type script, this index file will be updated automatically.
-
-```ts
-export * from "./postTypes";
-```
-
-#### Generating API
-
-Next we will begin the API generator. Press enter to confirm the filename for the API. You will be prompted to include 5 different API functions (fetch, fetch by id, create, update, delete). Press enter for each.
-
-You will again be prompted to confirm the code generated:
-
-```ts
-import { axiosInstance } from "~/api";
-import type { PostType } from "../types";
-
-const url = "/posts";
-
-export const fetchPosts = async (): Promise<PostType[]> => {
-  const response = await axiosInstance.get(url);
+export const fetchUsers = async (): Promise<UserType[]> => {
+  const response = await axiosInstance.get('/users');
   return response.data;
 };
 
-export const fetchPostById = async (id: string): Promise<PostType | null> => {
-  const response = await axiosInstance.get(`${url}/${id}`);
-  return response.data;
-};
+// src/features/users/hooks/useUsers.ts
+import { useQuery } from '@tanstack/react-query';
+import { fetchUsers } from '../api';
 
-export const createPost = async (
-  newPost: Omit<PostType, "id">
-): Promise<PostType> => {
-  const response = await axiosInstance.post(url, newPost);
-  return response.data;
-};
-
-export const updatePost = async (updatedPost: PostType): Promise<PostType> => {
-  const response = await axiosInstance.put(
-    `${url}/${updatedPost.id}`,
-    updatedPost
-  );
-  return response.data;
-};
-
-export const deletePost = async (id: string): Promise<void> => {
-  await axiosInstance.delete(`${url}/${id}`);
-};
-```
-
-Again, after the file is created an index file is used for barrel exporting:
-
-```ts
-export * from "./postsApi";
-```
-
-After this, you are prompted for hooks associated with each API function. Press enter for each prompt and confirmation.
-
-```ts
-import { useQuery } from "@tanstack/react-query";
-import { fetchPosts } from "../api/postsApi";
-
-export const useFetchPosts = () => {
+export const useUsers = () => {
   return useQuery({
-    queryKey: ["posts"],
-    queryFn: fetchPosts,
+    queryKey: ['users'],
+    queryFn: fetchUsers,
   });
 };
 ```
 
-```ts
-import { useQuery } from "@tanstack/react-query";
-import { fetchPostById } from "../api/postsApi";
+## 📦 Barrel Exports
 
-export const useFetchPostById = (id: string) => {
-  return useQuery({
-    queryKey: ["post", id],
-    queryFn: () => fetchPostById(id),
-  });
-};
+**Barrel exports** are used throughout the project to create clean, organized import paths and improve developer experience.
+
+### What are Barrel Exports?
+
+Barrel exports are `index.ts` files that re-export modules from a directory, acting as a single entry point.
+
+```typescript
+// src/features/users/index.ts
+export * from './api';
+export * from './components';
+export * from './hooks';
+export * from './stores';
+export * from './types';
 ```
 
-```ts
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost } from "../api/postsApi";
+### Benefits
 
-export const useCreatePost = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: createPost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-  });
-};
+- **Clean Imports:** `import { useUsers, UserType } from '@/features/users'`
+- **Encapsulation:** Internal structure changes don't affect external imports
+- **Discoverability:** Single place to see all exports from a feature
+- **Refactoring:** Easier to move files without breaking imports
+
+### Best Practices
+
+1. **Always use barrel exports** for directories with multiple files
+2. **Keep index.ts files minimal** - only re-export, don't add logic
+3. **Use TypeScript's `export type`** for type-only exports when needed
+4. **Update barrel exports** when adding/removing files
+
+## 🎨 UI Components with Shadcn
+
+This template uses [Shadcn/ui](https://ui.shadcn.com/), a collection of reusable components built with Radix UI and Tailwind CSS.
+
+### Why Shadcn?
+
+- **Copy-paste components** - Own your code, no external dependencies
+- **Customizable** - Built with CSS variables and Tailwind
+- **Accessible** - Built on Radix UI primitives
+- **TypeScript native** - Full type safety out of the box
+
+### Component Structure
+
+```
+src/components/
+├── ui/                 # Shadcn/ui components
+│   ├── button.tsx
+│   ├── input.tsx
+│   ├── card.tsx
+│   └── index.ts       # Barrel export
+├── ErrorComponent.tsx  # Custom shared components
+├── LoadingIndicator.tsx
+└── index.ts           # Barrel export
 ```
 
-```ts
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatePost } from "../api/postsApi";
+### Usage Example
 
-export const useUpdatePost = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: updatePost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-  });
-};
+```typescript
+// Import from barrel export
+import { Button } from '@/components/ui';
+
+// Use in component
+<Button variant='outline' size='sm'>
+  Click me
+</Button>;
 ```
 
-```ts
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deletePost } from "../api/postsApi";
+### Adding New Components
 
-export const useDeletePost = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: deletePost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-  });
-};
-```
+1. **Install via CLI:**
 
-And again, an index file for barrel exporting is generated:
+   ```bash
+   npx shadcn@latest add button
+   ```
 
-```ts
-export * from "./useCreatePost";
-export * from "./useDeletePost";
-export * from "./useFetchPostById";
-export * from "./useFetchPosts";
-export * from "./useUpdatePost";
-```
+2. **Add to barrel export:**
+   ```typescript
+   // src/components/ui/index.ts
+   export { Button } from './button';
+   ```
 
-#### Generating a Slice
+### Customization
 
-The slice generation script will start next. Confirm the filename and name prop as in prior prompts. When it asks for a type for the initial state, we are going to use the one we created in our types file: PostsState. The only field will be 'arePostsDisplayed' and we'll set the value to false. Type 'n' to finish adding fields and confirm the output code:
+Components can be customized by:
 
-```ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { PostsState } from "../types";
+- Editing the component files directly
+- Modifying Tailwind config
+- Using CSS variables in `src/index.css`
 
-const initialState: PostsState = {
-  // Define initial state structure here
-  arePostsDisplayed: false,
-};
+## 🔄 State Management
 
-const postsSlice = createSlice({
-  name: "posts",
-  initialState,
-  reducers: {
-    // Define reducers here
-    exampleReducer: (state, action: PayloadAction<any>) => {
-      // Example reducer logic here
-    },
+This template uses a **dual state management approach**:
+
+### Server State - TanStack Query
+
+[TanStack Query](https://tanstack.com/query/latest) handles all server-side state management.
+
+**Features:**
+
+- Automatic background refetching
+- Caching and synchronization
+- Optimistic updates
+- Loading and error states
+
+```typescript
+// Fetching data
+const { data: users, isLoading, error } = useUsers();
+
+// Mutations
+const createUserMutation = useMutation({
+  mutationFn: createUser,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['users'] });
   },
 });
-
-// Export actions as named exports
-export const { exampleReducer } = postsSlice.actions;
-
-// Export reducer as default export
-export default postsSlice.reducer;
 ```
 
-Notice that the boilerplate code is incomplete. We'll need to add our reducers and export the actions.
+### Client State - Zustand
 
-The next prompt will ask about including this slice in the Redux store. Press enter to say yes. This is the only time Scaffolder will alter code outside of the feature directory. Our store will now include our new slice:
+[Zustand](https://zustand-demo.pmnd.rs/) manages client-side application state.
 
-```ts
-import { combineReducers } from "@reduxjs/toolkit";
-import { counterSlice } from "~/features/counter";
-import { postsSlice } from "~/features/posts";
+**Features:**
 
-export const reducers = combineReducers({
-  counterSlice: counterSlice,
-  postsSlice: postsSlice,
-});
-```
+- Minimal boilerplate
+- TypeScript support
+- No providers needed
+- Devtools support
 
-And just like with our API, we will need a custom hook for our slice. This time, however, we will rename it rather than use the generated filename. Type 'n' when prompted for the filename 'usePosts' and instead type in 'useDisplayPosts'. Like with our slice, this generated hook will need some work but the boilerplate got us started:
+```typescript
+// src/features/counter/stores/counterStore.ts
+import { create } from 'zustand';
 
-```ts
-import { useAppSelector, useAppDispatch } from "~/store";
-import /* actions from slice */ "../slices";
-
-export const useDisplayPosts = () => {
-  const appDispatch = useAppDispatch();
-  const arePostsDisplayed = useAppSelector(
-    (state) => state.postsSlice.arePostsDisplayed
-  );
-  const func = () => appDispatch(/* action() */);
-
-  return {
-    arePostsDisplayed,
-    func,
-  };
-};
-```
-
-Type enter to confirm. Notice our index file has been updated:
-
-```ts
-export * from "./useCreatePost";
-export * from "./useDeletePost";
-export * from "./useDisplayPosts";
-export * from "./useFetchPostById";
-export * from "./useFetchPosts";
-export * from "./useUpdatePost";
-```
-
-#### Generating Components
-
-Before we start generating components, let's plan the structure of our feature. For `posts`, we need:
-
-1. **Post Component**: Represents a single post.
-2. **PostsContainer Component**: A container displaying multiple `Post` components.
-3. **Posts Component**: An outer wrapper for additional features (e.g., header, layout).
-
-Before we start generating components, let's take a moment and think about the structure of what we are creating. We'll need a component for an individual post, a container for the posts, and an outer wrapped so we can include a header. Later we will alter some of these components when we implement the hide/display state.
-
-Let's change the name of our first component to 'Post'. We will include a single prop, 'post', and the type will be our PostType we generated earlier. We then need to import this type. This component will not use a hook. Confirm the generated code:
-
-```tsx
-import React from "react";
-
-import type { PostType } from "../types";
-
-interface PostProps {
-  post?: PostType;
+interface CounterStore {
+  value: number;
+  increment: () => void;
+  decrement: () => void;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
-  return (
-    <div>
-      <p>Post works!</p>
-    </div>
-  );
-};
-
-export default Post;
+export const useCounterStore = create<CounterStore>((set) => ({
+  value: 0,
+  increment: () => set((state) => ({ value: state.value + 1 })),
+  decrement: () => set((state) => ({ value: state.value - 1 })),
+}));
 ```
 
-Here again, we will need to do some work to get this code just right.
+### State Management Guidelines
 
-Let's generate another component, 'PostsContainer'. It will not need any props but it will use the PostType type. We also will use a hook, useFetchPosts. Confirm the code generated:
+1. **Use TanStack Query for:**
 
-```tsx
-import React from "react";
-import { useFetchPosts } from "../hooks";
-import type { PostType } from "../types";
+   - API data fetching
+   - Server state caching
+   - Background synchronization
+   - Optimistic updates
 
-const PostsContainer: React.FC = () => {
-  const fetchposts = useFetchPosts();
+2. **Use Zustand for:**
 
-  return (
-    <div>
-      <p>PostsContainer works!</p>
-    </div>
-  );
-};
+   - UI state (modals, forms)
+   - User preferences
+   - Client-side filters
+   - Temporary state
 
-export default PostsContainer;
+3. **Avoid mixing concerns:**
+   - Don't store server data in Zustand
+   - Don't use TanStack Query for client state
+
+## 📊 Data & Constants
+
+The `src/data/` directory contains static data and constants used throughout the application.
+
+### Structure
+
+```
+src/data/
+├── index.ts           # Barrel export
+├── navItems.ts        # Navigation configuration
+├── texts.ts           # Static text content
+└── constants.ts       # Application constants
 ```
 
-Lastly, we'll generate a 'Posts' component to wrap the 'PostsContainer' and a heading. This component will not need props, types, or hooks.
+### Usage Patterns
 
-#### Alterations
+**Navigation Configuration:**
 
-Before we go through and alter the generated code, let's make sure our posts directory is correct:
+```typescript
+// src/data/navItems.ts
+export const navItems = [
+  { text: 'Home', path: '/' },
+  { text: 'About', path: '/about' },
+  { text: 'Contact', path: '/contact' },
+];
+```
+
+**Static Text Content:**
+
+```typescript
+// src/data/texts.ts
+export const texts = {
+  about: 'This template provides a robust foundation...',
+  contact: 'Get in touch with our team...',
+  errors: {
+    notFound: 'Page not found',
+    serverError: 'Something went wrong',
+  },
+} as const;
+```
+
+### Best Practices
+
+1. **Use const assertions** for better TypeScript inference
+2. **Group related constants** in objects
+3. **Use SCREAMING_SNAKE_CASE** for constants
+4. **Export through barrel exports** for clean imports
+
+## 🤝 Contributing Guidelines
+
+### Setting Up Development Environment
+
+1. **Clone and install:**
+
+   ```bash
+   git clone [repository-url]
+   cd [project-name]
+   npm install
+   ```
+
+2. **Start development servers:**
+
+   ```bash
+   # Terminal 1 - Frontend
+   npm run dev
+
+   # Terminal 2 - Mock API
+   npm run server
+   ```
+
+### Code Style and Standards
+
+1. **TypeScript:** All code must be written in TypeScript
+2. **ESLint:** Follow the configured ESLint rules
+3. **Prettier:** Code formatting is handled automatically
+4. **Naming Conventions:**
+   - Components: PascalCase (`UserCard.tsx`)
+   - Hooks: camelCase with `use` prefix (`useUsers.ts`)
+   - Types: PascalCase with `Type` suffix (`UserType`)
+   - Constants: SCREAMING_SNAKE_CASE (`API_BASE_URL`)
+
+### Creating New Features
+
+1. **Create feature directory:**
+
+   ```bash
+   mkdir -p src/features/[feature-name]
+   ```
+
+2. **Follow the feature structure:**
+
+   ```
+   src/features/[feature-name]/
+   ├── index.ts
+   ├── components/
+   ├── hooks/
+   ├── stores/
+   ├── types/
+   └── api/
+   ```
+
+3. **Add barrel exports** for each subdirectory
+
+4. **Update main feature index.ts:**
+   ```typescript
+   export * from './components';
+   export * from './hooks';
+   export * from './stores';
+   export * from './types';
+   export * from './api';
+   ```
+
+### Adding UI Components
+
+1. **For Shadcn components:**
+
+   ```bash
+   npx shadcn@latest add [component-name]
+   ```
+
+2. **For custom components:**
+   - Add to `src/components/`
+   - Include in barrel export
+   - Add TypeScript interfaces
+   - Include JSDoc comments
+
+## 🔧 Development Workflow
+
+### Available Scripts
 
 ```bash
-src/features/posts/
-├── api
-│   ├── index.ts
-│   └── postsApi.ts
-├── components
-│   ├── Post.tsx
-│   ├── PostsContainer.tsx
-│   └── index.ts
-├── hooks
-│   ├── index.ts
-│   ├── useCreatePost.ts
-│   ├── useDeletePost.ts
-│   ├── useDisplayPosts.ts
-│   ├── useFetchPostById.ts
-│   ├── useFetchPosts.ts
-│   └── useUpdatePost.ts
-├── index.ts
-├── slices
-│   ├── index.ts
-│   └── postsSlice.ts
-└── types
-    ├── index.ts
-    └── postTypes.ts
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+
+# Mock API
+npm run server       # Start json-server on port 3001
 ```
 
-We'll start with the individual Post component. We'll change the imports to include some pre-built components from the Material UI library (should already be installed):
+### Environment Configuration
 
-```tsx
-import React from "react";
-import type { PostType } from "../types";
-import { Card, Stack, Typography } from "@mui/material";
-```
+1. **Development:** Uses Vite dev server with HMR
+2. **Production:** Optimized build with code splitting
+3. **API:** Mock server with json-server for development
 
-Then we'll use those MUI components to display some of the post's details (we also made the prop mandatory):
+### File Organization Tips
 
-```tsx
-interface PostProps {
-  post: PostType;
-}
+1. **Keep components small** and focused
+2. **Use descriptive names** for files and functions
+3. **Group related functionality** in features
+4. **Maintain consistent structure** across features
+5. **Document complex logic** with comments
 
-const Post: React.FC<PostProps> = ({ post }) => {
-  return (
-    <Card sx={{ px: 4, py: 3 }}>
-      <Stack direction="column" gap={2}>
-        <Typography variant="h5">{post.title}</Typography>
-        <Typography variant="h6">{post.user}</Typography>
-        <Typography variant="body1">{post.content}</Typography>
-      </Stack>
-    </Card>
-  );
-};
+### Performance Considerations
 
-export default Post;
-```
+1. **Lazy load routes** with React Router
+2. **Use React.memo** for expensive components
+3. **Implement proper error boundaries**
+4. **Optimize bundle size** with code splitting
+5. **Use TanStack Query caching** effectively
 
-Next let's work on the PostsContainer component. Change the imports to include a Stack component from MUI, the Post component we just worked on, and a couple components from our template for loading and errors:
+## 📖 Additional Resources
 
-```tsx
-import React from "react";
-import { useFetchPosts } from "../hooks";
-import type { PostType } from "../types";
-import { Stack } from "@mui/material";
-import Post from "./Post";
-import { ErrorComponent, LoadingIndicator } from "~/components";
-```
-
-We will destructure the useFetchPosts hook, check for isLoading or error, and if the posts data is there, map over them creating individual Post components:
-
-```tsx
-const PostsContainer: React.FC = () => {
-  const { data: posts, isLoading, error } = useFetchPosts();
-
-  if (isLoading) return <LoadingIndicator />;
-  if (error) return <ErrorComponent />;
-
-  return (
-    <Stack direction="column" gap={2}>
-      {posts?.map((post: PostType) => (
-        <Post key={post.id} post={post} />
-      ))}
-    </Stack>
-  );
-};
-
-export default PostsContainer;
-```
-
-Next we'll import components from MUI and our PostsContainer:
-
-```tsx
-import { Stack, Typography } from "@mui/material";
-import React from "react";
-import PostsContainer from "./PostsContainer";
-
-const Posts: React.FC = () => {
-  return (
-    <Stack direction="column" gap={2} mt={4}>
-      <Typography variant="h4">Posts</Typography>
-      <PostsContainer />
-    </Stack>
-  );
-};
-
-export default Posts;
-```
-
-And finally, we will import our Posts component to the About page:
-
-```tsx
-import React from "react";
-import { Typography, Container } from "@mui/material";
-import { texts } from "~/data";
-import { Posts } from "~/features/posts";
-
-const AboutPage: React.FC = () => {
-  return (
-    <Container sx={{ mt: 8 }}>
-      <Typography variant="h4" mb={2}>
-        About this template...
-      </Typography>
-      <Typography variant="body1">{texts.about}</Typography>
-      <Posts />
-    </Container>
-  );
-};
-
-export default AboutPage;
-```
-
-Our posts should now be displayed.
-
-But we want to be able to hide and show the posts. And it would also be good to be able to delete posts (since clearly they're not always nice). Let's start by finishing the slice that was generated:
-
-```ts
-import { createSlice } from "@reduxjs/toolkit";
-import type { PostsState } from "../types";
-
-const initialState: PostsState = {
-  arePostsDisplayed: false,
-};
-
-const postsSlice = createSlice({
-  name: "posts",
-  initialState,
-  reducers: {
-    displayPosts: (state) => {
-      state.arePostsDisplayed = true;
-    },
-    hidePosts: (state) => {
-      state.arePostsDisplayed = false;
-    },
-  },
-});
-
-export const { displayPosts, hidePosts } = postsSlice.actions;
-
-export default postsSlice.reducer;
-```
-
-And now we'll adjust the useDisplayPosts hook:
-
-```ts
-import { useAppSelector, useAppDispatch } from "~/store";
-import { displayPosts, hidePosts } from "../slices";
-
-export const useDisplayPosts = () => {
-  const appDispatch = useAppDispatch();
-  const arePostsDisplayed = useAppSelector(
-    (state) => state.postsSlice.arePostsDisplayed
-  );
-  const hide = () => appDispatch(hidePosts());
-  const display = () => appDispatch(displayPosts());
-
-  return {
-    arePostsDisplayed,
-    hidePosts: hide,
-    displayPosts: display,
-  };
-};
-```
-
-Now we'll add a button from MUI to our AboutPage and import the useDisplayPosts hook so we can toggle the display of the posts:
-
-```tsx
-import { Button, Typography, Container } from "@mui/material";
-import { texts } from "~/data";
-import { Posts, useDisplayPosts } from "~/features/posts";
-
-function AboutPage() {
-  const { arePostsDisplayed, displayPosts, hidePosts } = useDisplayPosts();
-
-  const handleDisplayPostsClick = () =>
-    arePostsDisplayed ? hidePosts() : displayPosts();
-
-  return (
-    <Container sx={{ mt: 8 }}>
-      <Typography variant="h4" mb={2}>
-        About this template...
-      </Typography>
-      <Typography variant="body1">{texts.about}</Typography>
-      <Button onClick={handleDisplayPostsClick}>
-        {arePostsDisplayed ? "Hide " : "Show "}Posts
-      </Button>
-      {arePostsDisplayed && <Posts />}
-    </Container>
-  );
-}
-
-export default AboutPage;
-```
-
-Lastly, let's alter our Post component so we can delete it. We'll import some MUI components and icons as well as our useDeletePost hook:
-
-```tsx
-import React from "react";
-import type { PostType } from "../types";
-import { Card, IconButton, Stack, Typography } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useDeletePost } from "../hooks";
-
-interface PostProps {
-  post: PostType;
-}
-
-const Post: React.FC<PostProps> = ({ post }) => {
-  const { mutate: deletePost } = useDeletePost();
-
-  return (
-    <Card sx={{ px: 4, py: 3 }}>
-      <Stack direction="column" gap={2}>
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h5">{post.title}</Typography>
-          <IconButton onClick={() => deletePost(post.id)}>
-            <DeleteForeverIcon color="warning" />
-          </IconButton>
-        </Stack>
-        <Typography variant="h6">{post.user}</Typography>
-        <Typography variant="body1">{post.content}</Typography>
-      </Stack>
-    </Card>
-  );
-};
-
-export default Post;
-```
-
-Now we can delete that second post (because it's so mean).
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+- [React Documentation](https://react.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Vite Guide](https://vitejs.dev/guide/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Shadcn/ui Documentation](https://ui.shadcn.com/)
+- [TanStack Query Documentation](https://tanstack.com/query/latest)
+- [Zustand Documentation](https://zustand-demo.pmnd.rs/)
+- [React Router Documentation](https://reactrouter.com/)
