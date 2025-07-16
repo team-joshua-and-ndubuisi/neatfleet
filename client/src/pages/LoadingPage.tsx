@@ -1,23 +1,12 @@
 import React from 'react';
-import { CircularProgress, Box, Typography } from '@mui/material';
+import { Spinner } from '@/components';
 
 const LoadingPage: React.FC = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        backgroundColor: 'background.default',
-      }}
-    >
-      <CircularProgress />
-      <Typography variant='body1' sx={{ mt: 2 }} color='text.secondary'>
-        Loading, please wait...
-      </Typography>
-    </Box>
+    <div className='flex flex-col items-center justify-center min-h-screen bg-background'>
+      <Spinner size='lg' className='text-primary' />
+      <p className='mt-4 text-muted-foreground'>Loading, please wait...</p>
+    </div>
   );
 };
 
