@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserType } from '@/features/users';
-import { ListItem, Typography, Link } from '@mui/material';
+import { cn } from '@/lib/utils';
 
 interface UserProps {
   user: UserType;
@@ -8,18 +8,20 @@ interface UserProps {
 
 const User: React.FC<UserProps> = ({ user }) => {
   return (
-    <ListItem>
-      <Typography variant='body1'>
+    <li className='flex items-center px-4 py-2'>
+      <p className='text-base text-foreground'>
         {user.name} -{' '}
-        <Link
-          underline='hover'
+        <a
           href={`mailto:${user.email}`}
-          sx={{ cursor: 'pointer' }}
+          className={cn(
+            'text-blue-500 visited:text-blue-500 underline-offset-4 hover:underline',
+            'transition-colors cursor-pointer'
+          )}
         >
           {user.email}
-        </Link>
-      </Typography>
-    </ListItem>
+        </a>
+      </p>
+    </li>
   );
 };
 
