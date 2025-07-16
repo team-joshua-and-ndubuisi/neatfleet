@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui';
 
 const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
@@ -10,33 +10,18 @@ const NotFoundPage: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        backgroundColor: 'background.default',
-        textAlign: 'center',
-        p: 3,
-      }}
-    >
-      <Typography
-        variant='h1'
-        component='h1'
-        color='error'
-        sx={{ fontWeight: 'bold' }}
-      >
-        404
-      </Typography>
-      <Typography variant='h5' color='text.secondary' sx={{ mt: 2 }}>
+    <div className='flex flex-col items-center justify-center min-h-screen bg-background text-center p-6'>
+      <h1 className='text-8xl font-bold text-destructive mb-4'>404</h1>
+      <h2 className='text-xl text-muted-foreground mb-8'>
         Oops! The page you're looking for doesn't exist.
-      </Typography>
-      <Button variant='contained' sx={{ mt: 4 }} onClick={handleBackBtnClick}>
+      </h2>
+      <Button
+        onClick={handleBackBtnClick}
+        className='bg-blue-400 hover:bg-blue-500 mt-4'
+      >
         Go Back to Home
       </Button>
-    </Box>
+    </div>
   );
 };
 
