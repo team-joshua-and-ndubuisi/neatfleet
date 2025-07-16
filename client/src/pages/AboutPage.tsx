@@ -1,15 +1,12 @@
 import React from 'react';
-import { Typography, Container } from '@mui/material';
 import { texts } from '@/data';
 
 const AboutPage: React.FC = () => {
   return (
-    <Container sx={{ mt: 8 }}>
-      <Typography variant='h4' mb={2}>
-        About this template...
-      </Typography>
-      <Typography variant='body1'>{texts.about}</Typography>
-    </Container>
+    <div className='mt-16 px-8'>
+      <h4 className='text-3xl mb-4'>About this template...</h4>
+      <p>{texts.about}</p>
+    </div>
   );
 };
 
