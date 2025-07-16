@@ -1,7 +1,6 @@
 import React from 'react';
-import { List } from '@mui/material';
 import { UserType, useUsers, User } from '@/features/users';
-import { LoadingIndicator, ErrorComponent } from '@/oldComponents';
+import { LoadingIndicator, ErrorComponent } from '@/components';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, error } = useUsers();
@@ -10,11 +9,11 @@ const UserList: React.FC = () => {
   if (error) return <ErrorComponent />;
 
   return (
-    <List>
+    <ul className='space-y-1'>
       {users?.map((user: UserType) => (
         <User key={user.id} user={user} />
       ))}
-    </List>
+    </ul>
   );
 };
 
