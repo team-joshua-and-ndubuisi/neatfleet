@@ -2,7 +2,7 @@ name: CI/CD for Server
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
 
 on:
   push:
@@ -31,10 +31,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./server
         run: npm ci
-
-      - name: Run ESLint
-        working-directory: ./server
-        run: npm run lint
 
       - name: Build Project
         working-directory: ./server

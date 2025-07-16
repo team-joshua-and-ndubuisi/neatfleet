@@ -1,7 +1,8 @@
-require("dotenv").config();
+import dotenv from "dotenv";
 import fs from "fs";
-import path from "path";
 import jsonwebtoken from "jsonwebtoken";
+import path from "path";
+dotenv.config();
 
 const rootDir = process.cwd();
 const pathToPrivKey = path.join(rootDir, "id_rsa_priv.pem");

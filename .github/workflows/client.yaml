@@ -2,7 +2,7 @@ name: CI/CD for Client
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_CLIENT }}
 
 on:
   push:
@@ -29,15 +29,15 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        working-directory: ./server
+        working-directory: ./client
         run: npm ci
 
       - name: Run ESLint
-        working-directory: ./server
+        working-directory: ./client
         run: npm run lint
 
       - name: Build Project
-        working-directory: ./server
+        working-directory: ./client
         run: npm run build
 
   deploy:
@@ -54,15 +54,15 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        working-directory: ./server
+        working-directory: ./client
         run: npm ci
 
       - name: Build project
-        working-directory: ./server
+        working-directory: ./client
         run: npm run build
 
       - name: Deploy to Vercel
-        working-directory: ./server
+        working-directory: ./client
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npx vercel --prod --token $VERCEL_TOKEN
