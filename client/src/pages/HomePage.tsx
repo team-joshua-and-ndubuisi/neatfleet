@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCounter } from '@/features/counter';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components';
 import { Plus, Minus } from 'lucide-react';
 
 const HomePage: React.FC = () => {
