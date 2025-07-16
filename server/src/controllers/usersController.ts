@@ -13,16 +13,16 @@ const User = prisma.user; // dealing with only user table
 const searchUsers = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // const { query } = req.query;
-    let { firstName, lastName, email, page, limit } = req.query;
+    let { first_name, last_name, email, page, limit } = req.query;
 
-    if (!req.query || (!firstName && !lastName && !email)) {
+    if (!req.query || (!first_name && !last_name && !email)) {
       const error: ExtendedErrorT = new Error("Search query is required");
       error.statusCode = 400;
       return next(error);
     }
 
-    const targetFirstName = firstName ? String(firstName) : "";
-    const targetLastName = lastName ? String(lastName) : "";
+    const targetfirst_name = first_name ? String(first_name) : "";
+    const targetlast_name = last_name ? String(last_name) : "";
     const targetEmail = email ? String(email) : "";
 
     const currentPage = isNaN(Number(page)) ? 1 : Number(page);
@@ -34,8 +34,8 @@ const searchUsers = asyncHandler(
       take: queryLimit,
       where: {
         OR: [
-          { first_name: { contains: targetFirstName, mode: "insensitive" } },
-          { last_name: { contains: targetLastName, mode: "insensitive" } },
+          { first_name: { contains: targetfirst_name, mode: "insensitive" } },
+          { last_name: { contains: targetlast_name, mode: "insensitive" } },
           { email: { contains: targetEmail, mode: "insensitive" } },
         ],
       },

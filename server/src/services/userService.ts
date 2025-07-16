@@ -20,12 +20,28 @@ const getAllUsers = async () => {
   }
 };
 
-const createUser = async (name: string, email: string) => {
+const createUser = async ({
+  first_name, 
+  last_name,
+  email,
+  phone,
+  hashedPassword, 
+} : {
+  first_name: string, 
+  last_name: string, 
+  email: string, 
+  phone: string, 
+  hashedPassword: string 
+}) => {
   try {
     const user = await prismaClient.user.create({
       data: {
-        first_name: name,
+        first_name: first_name,
+        last_name: last_name,
         email,
+        phone,
+        password: hashedPassword,
+
       },
     });
     return user;
@@ -34,4 +50,4 @@ const createUser = async (name: string, email: string) => {
   }
 };
 
-export default { getUserById, getAllUsers, createUser };
+export { getUserById, getAllUsers, createUser };

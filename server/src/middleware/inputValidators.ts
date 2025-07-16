@@ -1,13 +1,13 @@
 const { body, param, validationResult } = require("express-validator");
 import { Request, Response, NextFunction } from "express";
 
-const firstNameValidator = body("firstName")
+const first_nameValidator = body("first_name")
   .trim()
   .notEmpty()
   .escape()
   .withMessage("Please include a first name.");
 
-const lastNameValidator = body("lastName")
+const last_nameValidator = body("last_name")
   .trim()
   .notEmpty()
   .escape()
@@ -59,8 +59,8 @@ const checkValidations = async (
 };
 
 export {
-  firstNameValidator,
-  lastNameValidator,
+  first_nameValidator,
+  last_nameValidator,
   emailValidator,
   passwordValidator,
   titleValidator,

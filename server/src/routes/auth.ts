@@ -9,8 +9,8 @@ import {
 } from "../controllers/authController";
 
 const {
-  firstNameValidator,
-  lastNameValidator,
+  first_nameValidator,
+  last_nameValidator,
   emailValidator,
   passwordValidator,
   checkValidations,
@@ -21,8 +21,8 @@ const router = Router();
 
 router.post(
   "/register",
-  firstNameValidator,
-  lastNameValidator,
+  first_nameValidator,
+  last_nameValidator,
   emailValidator,
   passwordValidator,
   checkValidations,
@@ -40,8 +40,8 @@ router.get("/profile", isAuth, userProfile);
 router.put(
   "/profile",
   isAuth,
-  firstNameValidator,
-  lastNameValidator,
+  first_nameValidator,
+  last_nameValidator,
   emailValidator,
   checkValidations,
   editProfile
