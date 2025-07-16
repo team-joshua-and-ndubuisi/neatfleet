@@ -5,23 +5,25 @@ const { logger } = require("../config/logger");
 
 import { NextFunction, Request, Response } from "express";
 import prisma from "../config/prisma"; //connection to Prisma client
-const User = prisma.user; // dealing with only user table
+import {User as UserType} from  "../../generated/prisma"; // dealing with only user table
 
 import { ExtendedErrorT } from "../types/error";
+
+const User = prisma.user
 
 // @desc    Register new user
 // @route   POST /register
 // @access  Public
 const registerUser = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { firstName, lastName, email, password } = req.body;
-    logger.info("Attempting to register user", { firstName, lastName, email });
+  async (req: Request<{}, {}, UserType>, res: Response, next: NextFunction) => {
+    const { first_name, last_name, email, password, phone } = req.body 
+    logger.info("Attempting to register user", { first_name, last_name, email });
 
     const userExists = await User.findUnique({ where: { email } });
 
     if (userExists) {
       logger.warn(
-        `${firstName} ${lastName} is already registered with email ${email}`
+        `${first_name} ${last_name} is already registered with email ${email}`
       );
       const error: ExtendedErrorT = new Error("User already exists");
       error.statusCode = 400;
@@ -33,16 +35,17 @@ const registerUser = asyncHandler(
 
     const user = await User.create({
       data: {
-        first_name: firstName,
-        last_name: lastName,
+        first_name: first_name,
+        last_name: last_name,
         email,
+        phone,
         password: hashedPassword,
-        is_admin: false,
+
       },
     });
 
     if (!user) {
-      logger.error(`Registration failed for ${firstName} ${lastName}`);
+      logger.error(`Registration failed for ${first_name} ${last_name}`);
       const error: ExtendedErrorT = new Error("User registration failed");
       error.statusCode = 400;
       return next(error);
@@ -50,15 +53,14 @@ const registerUser = asyncHandler(
 
     const tokenData = issueJWT(user);
 
-    logger.info(`${firstName} ${lastName} has been successfully registered`);
+    logger.info(`${first_name} ${last_name} has been successfully registered`);
 
     return res.status(201).json({
       user: {
         id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        email: user.email,
-        isAdmin: user.is_admin,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email
       },
       token: tokenData.token,
       expiresIn: tokenData.expiresIn,
@@ -101,10 +103,9 @@ const loginUser = asyncHandler(
     return res.status(200).json({
       user: {
         id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
-        isAdmin: user.is_admin,
       },
       token: tokenData.token,
       expiresIn: tokenData.expiresIn,
@@ -148,7 +149,7 @@ const editProfile = asyncHandler(
     //@ts-expect-error user will need to be authenticated before this route is hit _id will exist
     const userId = req.user._id;
 
-    const { firstName, lastName, email, currentPassword, newPassword } =
+    const { first_name, last_name, email, currentPassword, newPassword } =
       req.body;
 
     const user = await User.findUnique({
@@ -162,8 +163,8 @@ const editProfile = asyncHandler(
       return next(error);
     }
 
-    if (firstName) user.first_name = firstName;
-    if (lastName) user.last_name = lastName;
+    if (first_name) user.first_name = first_name;
+    if (last_name) user.last_name = last_name;
     if (email) user.email = email;
 
     if (currentPassword || newPassword) {
@@ -201,10 +202,9 @@ const editProfile = asyncHandler(
     res.status(200).json({
       user: {
         id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
-        isAdmin: user.is_admin,
       },
       message: "Profile updated successfully",
     });
