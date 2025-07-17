@@ -19,7 +19,9 @@ interface SignupFormProps {
 // first_name, last_name, email, password, phone
 const SignupForm = ({ apiCall }: SignupFormProps) => {
   return (
+    // <div className="w-full flex justify-center items-center">
     <form
+      className="max-w-md w-full p-6"
       onSubmit={async (e) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -110,6 +112,7 @@ const SignupForm = ({ apiCall }: SignupFormProps) => {
         </CardFooter>
       </Card>
     </form>
+    // </div>
   );
 };
 

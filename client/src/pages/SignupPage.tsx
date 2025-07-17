@@ -25,5 +25,9 @@ export default function SignupPage() {
   if (isPending) {
     return <div>Loading...</div>;
   }
-  return <SignupForm apiCall={handleSignup} />;
+  return (
+    <div className="w-full flex justify-center items-center">
+      <SignupForm apiCall={handleSignup} />;
+    </div>
+  );
 }

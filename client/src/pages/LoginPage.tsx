@@ -37,5 +37,9 @@ export default function LoginPage() {
     return <div>Loading...</div>;
   }
 
-  return <LoginForm apiCall={handleLogin} />;
+  return (
+    <div className="w-full flex justify-center items-center">
+      <LoginForm apiCall={handleLogin} />
+    </div>
+  );
 }

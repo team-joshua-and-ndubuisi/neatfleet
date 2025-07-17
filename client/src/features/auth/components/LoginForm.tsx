@@ -21,6 +21,7 @@ interface LoginFormProps {
 const LoginForm = ({ apiCall }: LoginFormProps) => {
   return (
     <form
+      className="max-w-md w-full p-6"
       onSubmit={async (e) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
