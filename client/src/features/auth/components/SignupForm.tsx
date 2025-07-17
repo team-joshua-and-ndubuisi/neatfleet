@@ -36,15 +36,10 @@ const SignupForm = ({ apiCall }: SignupFormProps) => {
       }}>
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Signup for an account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your information below to create a new account
           </CardDescription>
-          <CardAction>
-            <Link to="/login">
-              <Button variant="link">Login Here</Button>
-            </Link>
-          </CardAction>
         </CardHeader>
 
         <CardContent>
@@ -109,7 +104,17 @@ const SignupForm = ({ apiCall }: SignupFormProps) => {
             className="w-full cursor-pointer">
             Signup
           </Button>
+          <Button
+            onClick={(e) => e.preventDefault()}
+            className="w-full cursor-pointer">
+            Signup with google
+          </Button>
         </CardFooter>
+        <CardAction>
+          <Link to="/login">
+            <Button variant="link">or login Here</Button>
+          </Link>
+        </CardAction>
       </Card>
     </form>
     // </div>

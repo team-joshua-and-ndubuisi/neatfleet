@@ -38,11 +38,6 @@ const LoginForm = ({ apiCall }: LoginFormProps) => {
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
-          <CardAction>
-            <Link to="/signup">
-              <Button variant="link">Sign Up</Button>
-            </Link>
-          </CardAction>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
@@ -78,6 +73,16 @@ const LoginForm = ({ apiCall }: LoginFormProps) => {
             className="w-full cursor-pointer">
             Login
           </Button>
+          <Button
+            onClick={(e) => e.preventDefault()}
+            className="w-full cursor-pointer">
+            Google Login
+          </Button>
+          <CardAction>
+            <Link to="/signup">
+              <Button variant="link">Sign Up Here</Button>
+            </Link>
+          </CardAction>
         </CardFooter>
       </Card>
     </form>
