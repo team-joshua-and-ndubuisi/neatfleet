@@ -23,6 +23,7 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 
 ## 📚 Table of Contents
 
+- [Design System](#design-system)
 - [Tech Stack](#tech-stack)
 - [Project Architecture](#project-architecture)
 - [Features Directory Structure](#features-directory-structure)
@@ -32,6 +33,38 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 - [Data & Constants](#data--constants)
 - [Contributing Guidelines](#contributing-guidelines)
 - [Development Workflow](#development-workflow)
+
+## 🎨 Design System
+
+### ✅ Typography
+
+| Type | Font | Size |
+|---|---|---|---|
+| Headings | Lato | 2xl - 5xl |
+| Subheadings | Lato | xl - 2xl |
+| Body Text | Lato | base | 
+| Buttons | Lato | base - lg |
+
+- Font source: [Google Fonts - Lato](https://fonts.google.com/specimen/Lato)
+
+---
+
+### ✅ Color Palette
+
+| Name | Hex | Usage |
+|---|---|---|
+| Primary | #3B82F6 | Key interactive elements, main accents, brand emphasis |
+| Secondary | #2DD4BF | Complementary accents, highlights, calls to action |
+| Neutral Light | #F9FAFB | Backgrounds, container fills |
+| Black | #1F2937 | Primary text, strong contrasts, footer |
+| Accent Green | #10B981 | Success states, positive indicators |
+| Accent Red | #EF4444 | Error states, warnings, alerts |
+
+---
+
+### ✅ Icons
+
+[Lucide Icons](https://lucide.dev/icons/)
 
 ## 🛠️ Tech Stack
 
