@@ -1,7 +1,8 @@
-require("dotenv").config();
 import crypto from "crypto";
+import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
+dotenv.config();
 
 const rootDir = process.cwd();
 

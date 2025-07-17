@@ -1,9 +1,10 @@
+import dotenv from "dotenv";
+import * as http from "http";
+import { app } from "./app";
 import primaClient from "./config/prisma";
+import "./lib/generateKeyPair";
+dotenv.config();
 
-require("dotenv-safe").config();
-require("./lib/generateKeyPair");
-const http = require("http");
-const { app } = require("./app");
 // const { connectDB } = require('./config/database');
 
 const startApp = async () => {
