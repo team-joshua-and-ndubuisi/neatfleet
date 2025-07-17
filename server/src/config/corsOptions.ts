@@ -1,7 +1,7 @@
 import { logger } from "./logger";
 import { CorsOptions } from "cors";
 
-const whitelist = ["http://localhost:3000", "http://localhost:5173"];
+const whitelist = ["http://localhost:3000"];
 
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
