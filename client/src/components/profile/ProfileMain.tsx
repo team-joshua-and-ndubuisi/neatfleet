@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
   //Menu at top of profile loaded based on the type of user 
-  interface UserMenu{
+  interface UserMenuProp{
     userType: string,
     userName: string,
     bookingsCompleted?: number, //Admin Only
@@ -14,14 +14,14 @@ import {Link} from 'react-router-dom'
   }
   
  
-   const ProfileMain=(props: UserMenu)=> {
+   const ProfileMain: React.FC<UserMenuProp> =({userType,userName,years, location,image, bookings,rating })=>{
     return (
       <div className="bg-stone-300 ">
         <div className="flex w-full h-1/2 border-3 border border-black py-10 flex-col  lg:flex-row lg:justify-center  md:flex-row md:justify-center rounded">
             <div className='flex flex-col items-center '>
-                <img width="100%" className="border border-black size-100 rounded" src={props.image} alt="Profile Picture"/>
-                <span className=" text-3xl font-semibold py-5">{props.userName} Name</span>
-                <span className="text-3xl  py-5">{props.location} Memphis, Alabama</span>
+                <img width="100%" className="border border-black size-100 rounded" src={image} alt="Profile Picture"/>
+                <span className=" text-3xl font-semibold py-5">{userName} Name</span>
+                <span className="text-3xl  py-5">{location} Memphis, Alabama</span>
             </div>
             <div className="flex mx-30">
               <div className=" flex flex-col items-center justify-around ">
@@ -29,22 +29,22 @@ import {Link} from 'react-router-dom'
                 className="py-5 text-2xl font-semibold"
                 >
                     Number of Bookings
-                    {props.bookings}
+                    {bookings}
                 </span>
                 <span
                 className="py-5 text-2xl font-semibold"
                 >
-                    {props.rating}
+                    {rating}
                     Rating
                 </span>
                 <span
                 className="py-5 text-2xl font-semibold"
                 >
                     Years at  NeatFleet
-                    {props.years}
+                    {years}
                 </span>
             {/* Menu Items for techs  */}
-                {props.userType==="tech" && 
+                {userType==="tech" && 
                     <div className="flex flex-col items-center">
                         <Link
                         to="/profile/manage-services"
@@ -65,7 +65,7 @@ import {Link} from 'react-router-dom'
                     </div>
                      } 
                 {/* Menu Items for Admin */}
-                {props.userType==="admin" && 
+                {userType==="admin" && 
                  <div className="flex flex-col items-center">
                         <Link
                         to="/profile/manage-technicians"
@@ -92,5 +92,5 @@ import {Link} from 'react-router-dom'
           
       </div>
     )
-  }
+   }
   export default ProfileMain

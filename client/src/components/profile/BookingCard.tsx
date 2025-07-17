@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface BookingDetails{
+interface BookingProps{
     name: string,
     status: string,
     date: number,
@@ -8,29 +8,29 @@ interface BookingDetails{
     rating: number
 }
   
-   const BookingCard=(props: BookingDetails)=> {
+   const BookingCard: React.FC<BookingProps>=({name,status,date,details,rating})=>{
     return (
       <div>
        <div className="w-full flex py-10">
             <div className="border border-black py-5 px-15 text-xl border-round-5x rounded-tl-lg rounded-bl-lg">
                 Name
-                 <span>{props.name}</span>
+                 <span>{name}</span>
             </div>
             <div className="border border-black py-5 px-15 text-xl border-round-5x">
                 Status
-                <span>{props.status}</span>
+                <span>{status}</span>
             </div>
             <div className="border border-black py-5 px-15 text-xl border-round-5x">
                 Rating
-                <span>{props.date}</span>
+                <span>{date}</span>
             </div>
             <div className="border border-black py-5 px-15 text-xl border-round-5x">
                 Details
-                <span>{props.details}</span>
+                <span>{details}</span>
             </div>
              <div className="border border-black py-5 px-15 text-xl border-round-5x rounded-br-lg rounded-tr-lg">
                 Rating
-                <span>{props.rating}</span>
+                <span>{rating}</span>
             </div>
        </div>
       </div>

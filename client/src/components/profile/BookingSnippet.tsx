@@ -5,7 +5,7 @@ import {
     AccordionTrigger,
   } from "@/components/ui/accordion"
   
-  import React, {FunctionComponent, PropsWithChildren} from 'react';
+  import {FunctionComponent, PropsWithChildren} from 'react';
   
   
    const BookingSnippets: FunctionComponent<PropsWithChildren> =({children})=> {
