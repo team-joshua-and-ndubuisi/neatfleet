@@ -56,7 +56,7 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 | Primary | #3B82F6 | Key interactive elements, main accents, brand emphasis |
 | Secondary | #2DD4BF | Complementary accents, highlights, calls to action |
 | Neutral Light | #F9FAFB | Backgrounds, container fills |
-| Black | #1F2937 | Primary text, strong contrasts, footer |
+| Black | #000000 | Primary text, strong contrasts, footer |
 | Accent Green | #10B981 | Success states, positive indicators |
 | Accent Red | #EF4444 | Error states, warnings, alerts |
 
