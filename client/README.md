@@ -36,10 +36,10 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 
 ## 🎨 Design System
 
-### ✅ Typography
+### Typography
 
 | Type | Font | Size |
-|---|---|---|---|
+|---|---|---|
 | Headings | Lato | 2xl - 5xl |
 | Subheadings | Lato | xl - 2xl |
 | Body Text | Lato | base | 
@@ -49,7 +49,7 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 
 ---
 
-### ✅ Color Palette
+### Color Palette
 
 | Name | Hex | Usage |
 |---|---|---|
@@ -62,7 +62,7 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 
 ---
 
-### ✅ Icons
+### Icons
 
 [Lucide Icons](https://lucide.dev/icons/)
 
