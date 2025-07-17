@@ -5,7 +5,10 @@ import { useAuthStore } from "@/features/auth/stores/";
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const { initAuth, token, user } = useAuthStore();
+  // const { initAuth, token, user } = useAuthStore()
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+  const initAuth = useAuthStore((state) => state.initAuth);
   const {
     mutateAsync: loginMutate,
     isError,
@@ -25,6 +28,8 @@ export default function LoginPage() {
     }
   }, [data]);
 
+  let displayComponent: React.ReactNode = <LoginForm apiCall={handleLogin} />;
+
   if (isError) {
     console.error("Login failed");
   }
@@ -34,12 +39,12 @@ export default function LoginPage() {
   }
 
   if (isPending) {
-    return <div>Loading...</div>;
+    displayComponent = <div>Loading...</div>;
   }
 
   return (
-    <div className="w-full flex justify-center items-center">
-      <LoginForm apiCall={handleLogin} />
+    <div className="w-full flex justify-center h-screen">
+      {displayComponent}
     </div>
   );
 }

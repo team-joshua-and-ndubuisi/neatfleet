@@ -15,6 +15,8 @@ export default function SignupPage() {
     await signupMutate(userCredentials);
   };
 
+  let displayComponent: React.ReactNode = <SignupForm apiCall={handleSignup} />;
+
   if (isSuccess && data) {
     console.log("data", data);
   }
@@ -23,11 +25,11 @@ export default function SignupPage() {
   }
 
   if (isPending) {
-    return <div>Loading...</div>;
+    displayComponent = <div>Loading...</div>;
   }
   return (
-    <div className="w-full flex justify-center items-center">
-      <SignupForm apiCall={handleSignup} />;
+    <div className="w-full flex justify-center h-screen">
+      {displayComponent}
     </div>
   );
 }
