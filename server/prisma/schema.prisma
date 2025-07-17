@@ -10,8 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -25,6 +25,7 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   is_active  Boolean  @default(true)
+
   @@map("users")
 }
 
@@ -34,5 +35,3 @@ model Admin {
 
   @@map("admins") // This tells Prisma the actual table name is "admins"
 }
-
-
