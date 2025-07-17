@@ -10,9 +10,10 @@ export type AuthResponseT = {
 
 export interface SignupBodyT {
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   password: string;
+  phone: string;
 }
 export interface UserProfileT {
   id: string;

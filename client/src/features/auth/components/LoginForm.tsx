@@ -20,63 +20,30 @@ interface LoginFormProps {
 
 const LoginForm = ({ apiCall }: LoginFormProps) => {
   return (
-    // <section>
-    //   <h2>Login</h2>
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        console.log("form", form.email.value);
 
-    //   <form
-    //     action=""
-    //     onSubmit={async (e) => {
-    //       e.preventDefault();
-    //       const form = e.target as HTMLFormElement;
-    //       console.log("form", form.email.value);
+        const email = form.email.value;
+        const password = form.password.value;
 
-    //       const email = form.email.value;
-    //       const password = form.password.value;
-
-    //       apiCall({ email, password });
-    //     }}>
-    //     <label htmlFor="email">
-    //       Email:
-    //       <input
-    //         type="email"
-    //         id="email"
-    //       />
-    //     </label>
-
-    //     <label htmlFor="password">
-    //       Password:
-    //       <input
-    //         type="password"
-    //         id="password"
-    //       />
-    //     </label>
-    //     <button type="submit">Login</button>
-    //   </form>
-    // </section>
-    <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-        <CardAction>
-          <Link to="/signup">
-            <Button variant="link">Sign Up</Button>
-          </Link>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const form = e.target as HTMLFormElement;
-            console.log("form", form.email.value);
-
-            const email = form.email.value;
-            const password = form.password.value;
-
-            apiCall({ email, password });
-          }}>
+        apiCall({ email, password });
+      }}>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Login to your account</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+          <CardAction>
+            <Link to="/signup">
+              <Button variant="link">Sign Up</Button>
+            </Link>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -103,21 +70,16 @@ const LoginForm = ({ apiCall }: LoginFormProps) => {
               />
             </div>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button
-          type="submit"
-          className="w-full">
-          Login
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <CardFooter className="flex-col gap-2">
+          <Button
+            type="submit"
+            className="w-full cursor-pointer">
+            Login
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 };
 

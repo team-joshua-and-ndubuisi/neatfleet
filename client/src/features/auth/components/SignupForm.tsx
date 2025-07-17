@@ -1,69 +1,115 @@
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { SignupBodyT } from "../authTypes";
+import { Link } from "react-router-dom";
+import { Button } from "@/components";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface SignupFormProps {
   apiCall: (userCredentials: SignupBodyT) => Promise<void>;
 }
-
+// first_name, last_name, email, password, phone
 const SignupForm = ({ apiCall }: SignupFormProps) => {
   return (
-    <section>
-      <h1>Signup Page</h1>
-      <p>Please fill out the form to create an account.</p>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          const form = e.target as HTMLFormElement;
-          console.log("form", form.email.value);
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
 
-          const email = form.email.value;
-          const firstName = form.firstName.value;
-          const lastName = form.lastName.value;
-          const password = form.password.value;
+        apiCall({
+          first_name: form.firstName.value,
+          last_name: form.lastName.value,
+          email: form.email.value,
+          password: form.password.value,
+          phone: form.phone.value,
+        });
+      }}>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Login to your account</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+          <CardAction>
+            <Link to="/login">
+              <Button variant="link">Login Here</Button>
+            </Link>
+          </CardAction>
+        </CardHeader>
 
-          apiCall({ email, password, firstName, lastName });
-        }}>
-        <h2>Create Account</h2>
-        <label htmlFor="email">
-          Email:
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-          />
-        </label>
+        <CardContent>
+          <div className="flex flex-col gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                id="firstName"
+                type="text"
+                placeholder="first Name"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                type="text"
+                placeholder="last Name"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+              />
+            </div>
 
-        <label htmlFor="firstName">
-          First Name:
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-          />
-        </label>
-
-        <label htmlFor="lastName">
-          Last Name:
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-          />
-        </label>
-
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-          />
-        </label>
-        <button type="submit">Sign Up</button>
-      </form>
-    </section>
+            <div className="grid gap-2">
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="123-456-7890"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+                <a
+                  href="#"
+                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
+                  Forgot your password?
+                </a>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                required
+              />
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex-col gap-2">
+          <Button
+            type="submit"
+            className="w-full cursor-pointer">
+            Signup
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 };
 
