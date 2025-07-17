@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@emnapi/core": "^1.4.4",
+    "@emnapi/runtime": "^1.4.4",
+    "@emnapi/wasi-threads": "^1.0.3",
+    "@napi-rs/wasm-runtime": "^0.2.12",
+    "@tybys/wasm-util": "^0.10.0",
+    "function-bind": "^1.1.2",
+    "hasown": "^2.0.2",
+    "typescript-eslint": "^8.37.0"
+  }
+}
