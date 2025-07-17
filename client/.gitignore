@@ -25,4 +25,4 @@ dist-ssr
 .vercel
 *.tsbuildinfo
 .env.local
-.env
+.env*
