@@ -1,5 +1,9 @@
 import { axiosInstance } from "@/api";
-import type { LoginBodyT, SignupBodyT, AuthResponseT } from "../authTypes";
+import type {
+  LoginBodyT,
+  SignupBodyT,
+  AuthResponseT,
+} from "@/features/auth/authTypes";
 
 export const login = async (
   userCredentials: LoginBodyT

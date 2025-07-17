@@ -1,6 +1,5 @@
 import { create } from "zustand";
-// import { CounterState } from '@/features/counter';
-import { AuthResponseT } from "@/features/auth/";
+import { AuthResponseT, UserProfileT } from "@/features/auth/";
 
 interface AuthStore extends AuthResponseT {
   token: string;
@@ -25,13 +24,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     email: "",
   },
   setUserToken: (token: string) => set(() => ({ token })),
-  setUser: (user: {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    isAdmin: boolean;
-  }) => set(() => ({ user })),
+  setUser: (user: UserProfileT) => set(() => ({ user })),
 
   initAuth: (auth: AuthResponseT) => {
     set(() => ({

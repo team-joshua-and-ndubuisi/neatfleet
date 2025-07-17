@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { login, signup } from "../api";
-import { LoginBodyT, SignupBodyT, AuthResponseT } from "../authTypes";
+import { login, signup } from "@/features/auth/api";
+import {
+  LoginBodyT,
+  SignupBodyT,
+  AuthResponseT,
+} from "@/features/auth/authTypes";
 
 export const useAuth = () => {
   return {
