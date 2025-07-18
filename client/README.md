@@ -4,6 +4,12 @@ A modern, scalable React frontend template built with TypeScript, featuring a fe
 
 ## 🚀 Quick Start
 
+### create .env file with following variables under client/.env or just rename the file .env.example to .env
+
+```
+VITE_API_URL=http://localhost:4000/api # API URL for client to send requests to
+```
+
 1. **Install dependencies:**
 
    ```bash
@@ -135,21 +141,21 @@ export interface UserType {
 }
 
 // src/features/users/api/usersApi.ts
-import { axiosInstance } from '@/api';
-import type { UserType } from '../types';
+import { axiosInstance } from "@/api";
+import type { UserType } from "../types";
 
 export const fetchUsers = async (): Promise<UserType[]> => {
-  const response = await axiosInstance.get('/users');
+  const response = await axiosInstance.get("/users");
   return response.data;
 };
 
 // src/features/users/hooks/useUsers.ts
-import { useQuery } from '@tanstack/react-query';
-import { fetchUsers } from '../api';
+import { useQuery } from "@tanstack/react-query";
+import { fetchUsers } from "../api";
 
 export const useUsers = () => {
   return useQuery({
-    queryKey: ['users'],
+    queryKey: ["users"],
     queryFn: fetchUsers,
   });
 };
@@ -165,11 +171,11 @@ Barrel exports are `index.ts` files that re-export modules from a directory, act
 
 ```typescript
 // src/features/users/index.ts
-export * from './api';
-export * from './components';
-export * from './hooks';
-export * from './stores';
-export * from './types';
+export * from "./api";
+export * from "./components";
+export * from "./hooks";
+export * from "./stores";
+export * from "./types";
 ```
 
 ### Benefits
@@ -215,10 +221,12 @@ src/components/
 
 ```typescript
 // Import from barrel export
-import { Button } from '@/components/ui';
+import { Button } from "@/components/ui";
 
 // Use in component
-<Button variant='outline' size='sm'>
+<Button
+  variant="outline"
+  size="sm">
   Click me
 </Button>;
 ```
@@ -234,7 +242,7 @@ import { Button } from '@/components/ui';
 2. **Add to barrel export:**
    ```typescript
    // src/components/ui/index.ts
-   export { Button } from './button';
+   export { Button } from "./button";
    ```
 
 ### Customization
@@ -268,7 +276,7 @@ const { data: users, isLoading, error } = useUsers();
 const createUserMutation = useMutation({
   mutationFn: createUser,
   onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ['users'] });
+    queryClient.invalidateQueries({ queryKey: ["users"] });
   },
 });
 ```
@@ -286,7 +294,7 @@ const createUserMutation = useMutation({
 
 ```typescript
 // src/features/counter/stores/counterStore.ts
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface CounterStore {
   value: number;
@@ -342,9 +350,9 @@ src/data/
 ```typescript
 // src/data/navItems.ts
 export const navItems = [
-  { text: 'Home', path: '/' },
-  { text: 'About', path: '/about' },
-  { text: 'Contact', path: '/contact' },
+  { text: "Home", path: "/" },
+  { text: "About", path: "/about" },
+  { text: "Contact", path: "/contact" },
 ];
 ```
 
@@ -353,11 +361,11 @@ export const navItems = [
 ```typescript
 // src/data/texts.ts
 export const texts = {
-  about: 'This template provides a robust foundation...',
-  contact: 'Get in touch with our team...',
+  about: "This template provides a robust foundation...",
+  contact: "Get in touch with our team...",
   errors: {
-    notFound: 'Page not found',
-    serverError: 'Something went wrong',
+    notFound: "Page not found",
+    serverError: "Something went wrong",
   },
 } as const;
 ```
@@ -426,11 +434,11 @@ export const texts = {
 
 4. **Update main feature index.ts:**
    ```typescript
-   export * from './components';
-   export * from './hooks';
-   export * from './stores';
-   export * from './types';
-   export * from './api';
+   export * from "./components";
+   export * from "./hooks";
+   export * from "./stores";
+   export * from "./types";
+   export * from "./api";
    ```
 
 ### Adding UI Components
