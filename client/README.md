@@ -44,12 +44,12 @@ VITE_API_URL=http://localhost:4000/api # API URL for client to send requests to
 
 ### Typography
 
-| Type | Font | Size |
-|---|---|---|
-| Headings | Lato | 2xl - 5xl |
-| Subheadings | Lato | xl - 2xl |
-| Body Text | Lato | base | 
-| Buttons | Lato | base - lg |
+| Type        | Font | Size      |
+| ----------- | ---- | --------- |
+| Headings    | Lato | 2xl - 5xl |
+| Subheadings | Lato | xl - 2xl  |
+| Body Text   | Lato | base      |
+| Buttons     | Lato | base - lg |
 
 - Font source: [Google Fonts - Lato](https://fonts.google.com/specimen/Lato)
 
@@ -57,14 +57,14 @@ VITE_API_URL=http://localhost:4000/api # API URL for client to send requests to
 
 ### Color Palette
 
-| Name | Hex | Usage |
-|---|---|---|
-| Primary | #3B82F6 | Key interactive elements, main accents, brand emphasis |
-| Secondary | #2DD4BF | Complementary accents, highlights, calls to action |
-| Neutral Light | #F9FAFB | Backgrounds, container fills |
-| Black | #000000 | Primary text, strong contrasts, footer |
-| Accent Green | #10B981 | Success states, positive indicators |
-| Accent Red | #EF4444 | Error states, warnings, alerts |
+| Name          | Hex     | Usage                                                  |
+| ------------- | ------- | ------------------------------------------------------ |
+| Primary       | #3B82F6 | Key interactive elements, main accents, brand emphasis |
+| Secondary     | #2DD4BF | Complementary accents, highlights, calls to action     |
+| Neutral Light | #F9FAFB | Backgrounds, container fills                           |
+| Black         | #000000 | Primary text, strong contrasts, footer                 |
+| Accent Green  | #10B981 | Success states, positive indicators                    |
+| Accent Red    | #EF4444 | Error states, warnings, alerts                         |
 
 ---
 
@@ -312,14 +312,12 @@ export const useCounterStore = create<CounterStore>((set) => ({
 ### State Management Guidelines
 
 1. **Use TanStack Query for:**
-
    - API data fetching
    - Server state caching
    - Background synchronization
    - Optimistic updates
 
 2. **Use Zustand for:**
-
    - UI state (modals, forms)
    - User preferences
    - Client-side filters
@@ -475,6 +473,33 @@ npm run server       # Start json-server on port 3001
 1. **Development:** Uses Vite dev server with HMR
 2. **Production:** Optimized build with code splitting
 3. **API:** Mock server with json-server for development
+
+### Code Formatting with Prettier
+
+This project uses Prettier for consistent code formatting. To set up automatic formatting:
+
+1. **Install the Prettier extension** for your IDE:
+   - **VS Code:** Install "Prettier – Code formatter" from the extensions marketplace
+
+2. **Configure format on save** (recommended):
+
+   For **VS Code**, add the following to your `settings.json` (workspace or global):
+
+   ```json
+   {
+     "editor.formatOnSave": true,
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   }
+   ```
+
+   To access settings in VS Code:
+   - Press `Cmd/Ctrl + Shift + P`
+   - Type "Preferences: Open Settings (JSON)"
+   - Add the configuration above
+
+3. **Manual formatting:**
+   - **VS Code:** `Shift + Alt + F` (Windows/Linux) or `Shift + Option + F` (Mac)
+   - **Command line:** `npm run format` (if available)
 
 ### File Organization Tips
 
