@@ -24,6 +24,14 @@ model User {
   password   String   @db.VarChar(255)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  is_active Boolean @default(true)
+  is_active  Boolean  @default(true)
 }
+
+model Admin {
+  id      String @id @default(uuid()) @db.Uuid
+  user_id String @unique @db.Uuid
+
+  @@map("admins") // This tells Prisma the actual table name is "admins"
+}
+
 
