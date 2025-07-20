@@ -9,7 +9,11 @@
     "build": "npx prisma generate && tsc",
     "dev": "ts-node src/server.ts",
     "generate-keys": "ts-node src/lib/generateKeyPair.ts",
-    "vercel-build": "npm run generate-keys && npx prisma generate && tsc"
+    "vercel-build": "npm run generate-keys && npx prisma generate && tsc",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -43,15 +47,19 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.8",
     "jest": "^29.7.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.37.0"
   }
 }
