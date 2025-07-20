@@ -32,7 +32,7 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.workingDirectories": ["client"],
+  "eslint.workingDirectories": ["client", "server"],
 
   // Prettier - require config file (your .prettierrc in client/)
   "prettier.requireConfig": true,
