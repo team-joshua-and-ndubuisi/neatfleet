@@ -1,24 +1,27 @@
 import prismaClient from "../config/prisma"; // Ensure your db connection is set up correctly
 
-const getUserById = async (id: string) => {
+const getUserIdByEmail = async (email: string) => {
   try {
     const user = await prismaClient.user.findUnique({
-      where: { id },
+      where: { email },
+      select: { id: true },
     });
-    return user;
+
+    return user?.id || null; // Return the ID or null if not found
   } catch (error: any) {
-    throw new Error(`Error fetching user with ID ${id}: ${error.message}`);
+    throw new Error(`Error fetching user id with email ${email}: ${error.message}`);
   }
 };
 
-const getAllUsers = async () => {
-  try {
-    const users = await prismaClient.user.findMany();
-    return users;
-  } catch (error: any) {
-    throw new Error(`Error fetching users: ${error.message}`);
-  }
-};
+
+// const getAllUsers = async () => {
+//   try {
+//     const users = await prismaClient.user.findMany();
+//     return users;
+//   } catch (error: any) {
+//     throw new Error(`Error fetching users: ${error.message}`);
+//   }
+// };
 
 const createUser = async ({
   first_name, 
@@ -50,4 +53,4 @@ const createUser = async ({
   }
 };
 
-export { getUserById, getAllUsers, createUser };
+export { getUserIdByEmail, createUser };
