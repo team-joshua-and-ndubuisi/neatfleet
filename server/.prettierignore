@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+generated
+
+# Environment files
+.env*
+
+# Log files
+*.log
+
+# Prisma generated files
+prisma/generated
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
