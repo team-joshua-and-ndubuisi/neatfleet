@@ -25,13 +25,13 @@ const createUser = async ({
   last_name,
   email,
   phone,
-  hashedPassword, 
+  password, 
 } : {
   first_name: string, 
   last_name: string, 
   email: string, 
   phone: string, 
-  hashedPassword: string 
+  password: string 
 }) => {
   try {
     const user = await prismaClient.user.create({
@@ -40,7 +40,7 @@ const createUser = async ({
         last_name: last_name,
         email,
         phone,
-        password: hashedPassword,
+        password: password,
 
       },
     });
