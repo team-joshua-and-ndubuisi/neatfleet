@@ -6,7 +6,7 @@ import {
   deactivateUserByEmail,  
 } from '../src/services/userService';
 
-import {setUserAsAdmin} from '../src/services/adminService';
+import {setUserAsAdmin, isAdmin} from '../src/services/adminService';
 
 import prisma from '../src/config/prisma';
 
@@ -32,11 +32,13 @@ async function main() {
   // const user = await deactivateUserByEmail(email);
   // console.log(`User with the email ${user.email} is now set as inactive`);
 
-  //Test 4. set up admin (mvp doesn't need the func, this is for seed data set up)
-  const admin = await setUserAsAdmin(email);
-  console.log(`User with the email ${email} is now set as an admin`);
+  // //Test 4. set up admin (mvp doesn't need the func, this is for seed data set up)
+  // const admin = await setUserAsAdmin(email);
+  // console.log(`User with the email ${email} is now set as an admin`);
 
-  //Test 5, given an email, check to see if the user is an admin
+  // //Test 5, given an email, check to see if the user is an admin
+  // const isUserAdmin = await isAdmin(email);
+  // console.log(`User with the email ${email} is an admin`);
 
 }
 

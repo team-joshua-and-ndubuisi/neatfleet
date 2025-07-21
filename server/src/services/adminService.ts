@@ -35,4 +35,25 @@ const setUserAsAdmin = async (email: string) => {
   }
 }
 
-export {createAdmin, setUserAsAdmin};
+const isAdmin = async (email: string) => {
+  try {
+    const userID = await getUserIdByEmail(email);
+    if (!userID) {
+      throw new Error(`User with email ${email} not found.`);
+    }
+
+    // query with userID, if return result return true, otherwise return false
+    const exists = await prismaClient.admin.findUnique({
+        where: {user_id: userID}
+    });
+
+    return exists !== null;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error setting user as admin, user email ${email}: ${error.message}`);
+    }
+    throw new Error(`Unknown error deactivating user with email ${email}`);
+  }    
+}
+
+export {createAdmin, setUserAsAdmin, isAdmin};
