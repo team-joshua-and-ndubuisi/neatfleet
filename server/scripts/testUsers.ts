@@ -1,6 +1,12 @@
 // scripts/testUserQueries.ts
 
-import { createUser, getUserIdByEmail, deactivateUserByEmail } from '../src/services/userService';
+import { 
+  createUser, 
+  getUserIdByEmail, 
+  deactivateUserByEmail, 
+  setUserAsAdmin 
+} from '../src/services/userService';
+
 import prisma from '../src/config/prisma';
 
 const userCreationObj = {
@@ -13,7 +19,7 @@ const userCreationObj = {
 
 async function main() {
   const {email, first_name} = userCreationObj;
-  //Test 1, user creation, now check the database to see if what you created is there
+  // //Test 1, user creation, now check the database to see if what you created is there
   // const user = await createUser(userCreationObj);
   // console.log('Created user:', user);
 
@@ -21,12 +27,15 @@ async function main() {
   // const userId = await  getUserIdByEmail(email);
   // console.log(`User id for ${first_name} with the email ${email} is: ${userId}`);
 
-  //Test 3, remove user (setting is_active flag s false)
-  const user = await deactivateUserByEmail(email);
-  console.log(`User with the email ${user.email} is now set as inactive`);
+  // //Test 3, remove user (setting is_active flag s false)
+  // const user = await deactivateUserByEmail(email);
+  // console.log(`User with the email ${user.email} is now set as inactive`);
 
-//   Test 4. set up admin (mvp doesn't need the func to add and remove admin)
-//   Test 5, given a user id, check to see if the user is an admin
+  //Test 4. set up admin (mvp doesn't need the func, this is for seed data set up)
+  const admin = await setUserAsAdmin(email);
+  console.log(`User with the email ${email} is now set as an admin`);
+
+  //Test 5, given a user id, check to see if the user is an admin
 
 }
 
