@@ -1,6 +1,5 @@
-import { create } from "zustand";
 import { AuthResponseT, UserProfileT } from "@/features/auth/";
-
+import { createLocalPersistStore } from "@/lib/utils";
 interface AuthStore extends AuthResponseT {
   token: string;
   user: {
@@ -14,28 +13,32 @@ interface AuthStore extends AuthResponseT {
   initAuth: (auth: AuthResponseT) => void;
 }
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  token: "",
-  user: {
-    firstName: "",
-    lastName: "",
-    isAdmin: false,
-    id: "",
-    email: "",
-  },
-  setUserToken: (token: string) => set(() => ({ token })),
-  setUser: (user: UserProfileT) => set(() => ({ user })),
+// good one
+export const useAuthStore = createLocalPersistStore<AuthStore>(
+  (set) => ({
+    token: "",
+    user: {
+      firstName: "",
+      lastName: "",
+      isAdmin: false,
+      id: "",
+      email: "",
+    },
+    setUserToken: (token: string) => set(() => ({ token })),
+    setUser: (user: UserProfileT) => set(() => ({ user })),
 
-  initAuth: (auth: AuthResponseT) => {
-    set(() => ({
-      token: auth.token,
-      user: {
-        id: auth.user.id,
-        firstName: auth.user.firstName,
-        lastName: auth.user.lastName,
-        email: auth.user.email,
-        isAdmin: auth.user.isAdmin,
-      },
-    }));
-  },
-}));
+    initAuth: (auth: AuthResponseT) => {
+      set(() => ({
+        token: auth.token,
+        user: {
+          id: auth.user.id,
+          firstName: auth.user.firstName,
+          lastName: auth.user.lastName,
+          email: auth.user.email,
+          isAdmin: auth.user.isAdmin,
+        },
+      }));
+    },
+  }),
+  "authStore"
+);
