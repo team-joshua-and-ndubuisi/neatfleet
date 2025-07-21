@@ -17,6 +17,14 @@ const ServiceCatalogPage = lazy(() => import('@/pages/ServiceCatalogPage'));
 const TechSelectionPage = lazy(() => import('@/pages/TechSelectionPage'));
 const ScheduleServicePage = lazy(() => import('@/pages/ScheduleServicePage'));
 const CartPaymentPage = lazy(() => import('@/pages/CartPaymentPage'));
+const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
+const StatusPage = lazy(() => import('@/pages/StatusPage'));
+const RatingPage = lazy(() => import('@/pages/RatingPage'));
+const ManageServicesPage = lazy(() => import('@/pages/ManageServicesPage'));
+const ManageTechniciansPage = lazy(
+  () => import('@/pages/ManageTechniciansPage')
+);
+const ManageSchedulePage = lazy(() => import('@/pages/ManageSchedulePage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 const AppRoutes: React.FC = () => {
@@ -38,6 +46,20 @@ const AppRoutes: React.FC = () => {
                 <Route path=':id' element={<ScheduleServicePage />} />
                 <Route path=':id/payment' element={<CartPaymentPage />} />
               </Route>
+            </Route>
+            <Route path='/profile'>
+              <Route index element={<ProfilePage />} />
+              <Route path='status' element={<StatusPage />} />
+              <Route path='rating' element={<RatingPage />} />
+              <Route path='manage-services' element={<ManageServicesPage />} />
+              <Route
+                path='manage-technicians'
+                element={<ManageTechniciansPage />}
+              />
+              <Route
+                path='manage-availability'
+                element={<ManageSchedulePage />}
+              />
             </Route>
             <Route path='*' element={<NotFoundPage />} />
           </Route>
