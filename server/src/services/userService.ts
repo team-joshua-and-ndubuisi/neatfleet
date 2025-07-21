@@ -14,6 +14,33 @@ const getUserIdByEmail = async (email: string) => {
 };
 
 
+
+/*
+- arg: email
+- SET user's is_active as false WHERE email=input
+*/
+const deactivateUserByEmail = async (email: string) => {
+  try {
+    const user = await prismaClient.user.findUnique({ where: { email } });
+    if (!user) {
+      throw new Error(`User with email ${email} not found.`);
+    }
+
+    const updatedUser = await prismaClient.user.update({
+      where: { email },
+      data: { is_active: false },
+    });
+
+    return updatedUser;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error deactivating user with email ${email}: ${error.message}`);
+    }
+    throw new Error(`Unknown error deactivating user with email ${email}`);
+  }
+};
+
+
 // const getAllUsers = async () => {
 //   try {
 //     const users = await prismaClient.user.findMany();
@@ -53,4 +80,4 @@ const createUser = async ({
   }
 };
 
-export { getUserIdByEmail, createUser };
+export { getUserIdByEmail, createUser, deactivateUserByEmail };
