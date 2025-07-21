@@ -15,7 +15,7 @@ interface AuthStore extends AuthResponseT {
 
 // good one
 export const useAuthStore = createLocalPersistStore<AuthStore>(
-  (set, get) => ({
+  (set) => ({
     token: "",
     user: {
       firstName: "",
