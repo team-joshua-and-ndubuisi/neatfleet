@@ -14,7 +14,7 @@ export function createLocalStore<T>(
   storeName: string
 ) {
   return create(
-    persist(store, {
+    persist<T>(store, {
       name: storeName,
       storage: createJSONStorage(() => localStorage),
     })
