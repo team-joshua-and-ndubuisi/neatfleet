@@ -3,9 +3,10 @@
 import { 
   createUser, 
   getUserIdByEmail, 
-  deactivateUserByEmail, 
-  setUserAsAdmin 
+  deactivateUserByEmail,  
 } from '../src/services/userService';
+
+import {setUserAsAdmin} from '../src/services/adminService';
 
 import prisma from '../src/config/prisma';
 
@@ -35,7 +36,7 @@ async function main() {
   const admin = await setUserAsAdmin(email);
   console.log(`User with the email ${email} is now set as an admin`);
 
-  //Test 5, given a user id, check to see if the user is an admin
+  //Test 5, given an email, check to see if the user is an admin
 
 }
 

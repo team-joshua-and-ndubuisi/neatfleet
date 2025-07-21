@@ -1,5 +1,4 @@
 import prismaClient from "../config/prisma"; // Ensure your db connection is set up correctly
-import {createAdmin} from "./adminService";
 
 const getUserIdByEmail = async (email: string) => {
   try {
@@ -37,29 +36,6 @@ const deactivateUserByEmail = async (email: string) => {
   }
 };
 
-const setUserAsAdmin = async (email: string) => {
-  // 1st check if user exist, if not throw an error
-  // if user exist, use user id to create an admin row based on user id
-  try {
-    const userID = await prismaClient.user.findUnique({
-      where: { email },
-      select: { id: true },
-    });
-
-    if (!userID) {
-      throw new Error(`User with email ${email} not found.`);
-    }
-
-    const admin = await createAdmin(userID.id);
-
-    return admin;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Error setting user as admin, user email ${email}: ${error.message}`);
-    }
-    throw new Error(`Unknown error deactivating user with email ${email}`);
-  }
-}
 
 const createUser = async ({
   first_name, 
@@ -95,5 +71,4 @@ export {
   getUserIdByEmail, 
   createUser, 
   deactivateUserByEmail, 
-  setUserAsAdmin 
 };
