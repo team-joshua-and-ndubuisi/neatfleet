@@ -14,6 +14,8 @@ const HomePage = lazy(() => import("@/pages/HomePage"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
 const ContactPage = lazy(() => import("@/pages/ContactPage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
+
 
 const AppRoutes: React.FC = () => {
   return (
@@ -46,6 +48,10 @@ const AppRoutes: React.FC = () => {
             <Route
               path="/signup"
               element={<SignupPage />}
+            />
+            <Route
+              path="/profile"
+              element={<ProfilePage />}
             />
             <Route
               path="*"

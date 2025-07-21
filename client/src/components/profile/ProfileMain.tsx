@@ -1,19 +1,19 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-  //Menu at top of profile loaded based on the type of user 
+  //Menu at top of profile loaded based on the type of user
   interface UserMenuProp{
     userType: string,
     userName: string,
     bookingsCompleted?: number, //Admin Only
-    years: number, 
+    years: number,
     rating?: number, //techs only
-    bookings: number, //client only
+    bookings: any, //client only
     location: string,
     image?: string,
   }
-  
- 
+
+
    const ProfileMain: React.FC<UserMenuProp> =({userType,userName,years, location,image, bookings,rating })=>{
     return (
       <div className="bg-stone-300 ">
@@ -44,7 +44,7 @@ import {Link} from 'react-router-dom'
                     {years}
                 </span>
             {/* Menu Items for techs  */}
-                {userType==="tech" && 
+                {userType==="tech" &&
                     <div className="flex flex-col items-center">
                         <Link
                         to="/profile/manage-services"
@@ -63,9 +63,9 @@ import {Link} from 'react-router-dom'
                             </span>
                         </Link>
                     </div>
-                     } 
+                     }
                 {/* Menu Items for Admin */}
-                {userType==="admin" && 
+                {userType==="admin" &&
                  <div className="flex flex-col items-center">
                         <Link
                         to="/profile/manage-technicians"
@@ -84,12 +84,12 @@ import {Link} from 'react-router-dom'
                             </span>
                         </Link>
                     </div>
-                } 
-              </div>  
+                }
+              </div>
             </div>
 
         </div>
-          
+
       </div>
     )
    }
