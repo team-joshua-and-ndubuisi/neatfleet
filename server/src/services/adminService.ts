@@ -53,7 +53,7 @@ const isAdmin = async (email: string) => {
       throw new Error(`Error setting user as admin, user email ${email}: ${error.message}`);
     }
     throw new Error(`Unknown error deactivating user with email ${email}`);
-  }    
+  }
 }
 
 export {createAdmin, setUserAsAdmin, isAdmin};
