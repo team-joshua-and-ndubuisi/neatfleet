@@ -22,7 +22,7 @@ export default function TechAvailabilityForm() {
         </section>
         <section>
           <h3>Select days available</h3>
-          {/* <AvailableDayPicker selectedDate={currentDate} /> */}
+          <AvailableDayPicker selectedDate={currentDate} />
         </section>
         <section>
           <h3>Select time available</h3>
