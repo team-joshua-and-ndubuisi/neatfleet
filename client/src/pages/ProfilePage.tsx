@@ -51,11 +51,14 @@ const AdminProfile: React.FC = () => {
 
 const ProfilePage: React.FC = () => {
   // Imagine this some logic to figure out the type of user...
-  const user = 'admin';
+  type UserType = 'client' | 'technician' | 'admin';
+  const user: UserType = 'admin' as UserType;
 
-  if (user === 'client') return <ClientProfile />;
   if (user === 'technician') return <TechnicianProfile />;
+
   if (user === 'admin') return <AdminProfile />;
+
+  return <ClientProfile />;
 };
 
 export default ProfilePage;
