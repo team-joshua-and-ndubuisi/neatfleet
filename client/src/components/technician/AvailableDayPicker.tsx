@@ -20,7 +20,7 @@ const daysOfWeek: DayT[] = [
 
 type AvailableDayPickerPropT = {
   selectedDate?: Date;
-  clickCallback?: (day: DayT) => void;
+  clickCallback?: (day: Date) => void;
 };
 
 export default function AvailableDayPicker({
@@ -37,21 +37,37 @@ export default function AvailableDayPicker({
 
   return (
     <div>
-      <ToggleGroup variant='outline' type='multiple' className=''>
+      <ToggleGroup variant='outline' type='multiple' className=' mx-auto'>
         {selections}
       </ToggleGroup>
     </div>
   );
 }
 
-function createDaySelection(day: DayT, currentDate: Date, clickCallback?: (day: DayT) => void) {
+function createDaySelection(day: DayT, currentDate: Date, clickCallback?: (day: Date) => void) {
   const currentNumberOfDay = currentDate.getDay();
 
+  // Check if the day is in the past compared to the current date
   const isPastDay = day.dayOfWeek < currentNumberOfDay;
+
+  const isToday = day.dayOfWeek === currentNumberOfDay;
+
+  // Calculate the offset from the current day to the target day
+  // If the day is today, the offset is 0
+  const daysFromCurrentDay = day.dayOfWeek - currentNumberOfDay;
+
+  const dayOffset = isToday
+    ? 0
+    : daysFromCurrentDay < 0
+      ? 7 + daysFromCurrentDay
+      : daysFromCurrentDay;
+
+  const dayDate = new Date(currentDate);
+  dayDate.setDate(currentDate.getDate() + dayOffset);
 
   return (
     <ToggleGroupItem
-      onClick={() => clickCallback && clickCallback(day)}
+      onClick={() => clickCallback && clickCallback(dayDate)}
       key={String(day.label + day.value)}
       value={day.value}
       aria-label={`Toggle ${day.value}`}

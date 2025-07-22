@@ -1,18 +1,6 @@
 import React from 'react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
-// const mockTimeSlots: { date: Date }[] = [
-//   {
-//     date: currentDate,
-//   },
-//   {
-//     date: new Date(new Date().setHours(currentDate.getHours() + 1)),
-//   },
-//   {
-//     date: new Date(new Date().setHours(currentDate.getHours() + 2)),
-//   },
-// ];
-
 type TimeSlotT = {
   date: Date;
 };
@@ -27,25 +15,19 @@ export default function AvailableTimePicker({ range, clickCallback }: AvailableT
   //if timeslots provided use them from props
   let timeSelections: JSX.Element[] = [];
 
-  // if (timeSlots) {
-  //   timeSelections = timeSlots.map(slot => {
-  //     timeSelection(slot.date);
-  //   });
-  // }
-
   //if range provided then create the timeslots for the range
   if (range) {
     const timeSlotsForRange = createTimeSelectionFromRange(range.start, range.end);
     timeSelections = timeSlotsForRange.map(time => {
-      return timeSelection(time, clickCallback);
+      return timeSelectionButton(time, clickCallback);
     });
   }
 
-  return <div className='flex flex-col'>{timeSelections}</div>;
+  return <div className='columns-3 w-11/12 mx-auto'>{timeSelections}</div>;
 }
 
 //generate the JSX for the date passed in
-function timeSelection(time: Date, callback?: (time: Date) => void) {
+function timeSelectionButton(time: Date, callback?: (time: Date) => void) {
   const timeString = time.toLocaleTimeString();
   time.setMinutes(0);
 
@@ -53,7 +35,7 @@ function timeSelection(time: Date, callback?: (time: Date) => void) {
   const amPm = timeString.split(' ')[1];
 
   return (
-    <ToggleGroup key={time.toUTCString()} variant='outline' type='multiple'>
+    <ToggleGroup key={time.toUTCString()} variant='outline' type='multiple' className='w-full'>
       <ToggleGroupItem
         onClick={() => {
           callback && callback(time);
