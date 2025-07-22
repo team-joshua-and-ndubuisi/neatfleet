@@ -22,7 +22,12 @@ export default function TechAvailabilityForm() {
         </section>
         <section>
           <h3>Select days available</h3>
-          <AvailableDayPicker selectedDate={currentDate} />
+          <AvailableDayPicker
+            clickCallback={day => {
+              console.log('Selected day:', day);
+            }}
+            selectedDate={currentDate}
+          />
         </section>
         <section>
           <h3>Select time available</h3>

@@ -20,15 +20,19 @@ const daysOfWeek: DayT[] = [
 
 type AvailableDayPickerPropT = {
   selectedDate?: Date;
+  clickCallback?: (day: DayT) => void;
 };
 
-export default function AvailableDayPicker({ selectedDate = new Date() }: AvailableDayPickerPropT) {
+export default function AvailableDayPicker({
+  selectedDate = new Date(),
+  clickCallback,
+}: AvailableDayPickerPropT) {
   console.log('selectedDate', selectedDate);
 
   const currentDate = new Date();
 
   const selections = daysOfWeek.map(dayOfWeek => {
-    return createDaySelection(dayOfWeek, currentDate);
+    return createDaySelection(dayOfWeek, currentDate, clickCallback);
   });
 
   return (
@@ -40,13 +44,14 @@ export default function AvailableDayPicker({ selectedDate = new Date() }: Availa
   );
 }
 
-function createDaySelection(day: DayT, currentDate: Date) {
+function createDaySelection(day: DayT, currentDate: Date, clickCallback?: (day: DayT) => void) {
   const currentNumberOfDay = currentDate.getDay();
 
   const isPastDay = day.dayOfWeek < currentNumberOfDay;
 
   return (
     <ToggleGroupItem
+      onClick={() => clickCallback && clickCallback(day)}
       key={String(day.label + day.value)}
       value={day.value}
       aria-label={`Toggle ${day.value}`}
