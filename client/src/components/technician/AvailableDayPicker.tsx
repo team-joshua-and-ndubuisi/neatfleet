@@ -5,14 +5,26 @@ export default function AvailableDayPicker() {
   return (
     <div>
       <ToggleGroup variant='outline' type='multiple'>
-        <ToggleGroupItem value='bold' aria-label='Toggle bold'>
-          monday
+        <ToggleGroupItem value='monday' aria-label='Toggle monday'>
+          <span>Monday</span>
         </ToggleGroupItem>
-        <ToggleGroupItem value='italic' aria-label='Toggle italic'>
-          monday
+        <ToggleGroupItem value='tuesday' aria-label='Toggle tuesday'>
+          <span>Tuesday</span>
         </ToggleGroupItem>
-        <ToggleGroupItem value='strikethrough' aria-label='Toggle strikethrough'>
-          monday
+        <ToggleGroupItem value='wednesday' aria-label='Toggle wednesday'>
+          <span>Wednesday</span>
+        </ToggleGroupItem>
+        <ToggleGroupItem value='thursday' aria-label='Toggle thursday'>
+          <span>Thursday</span>
+        </ToggleGroupItem>
+        <ToggleGroupItem value='friday' aria-label='Toggle friday'>
+          <span>Friday</span>
+        </ToggleGroupItem>
+        <ToggleGroupItem value='saturday' aria-label='Toggle saturday'>
+          <span>Saturday</span>
+        </ToggleGroupItem>
+        <ToggleGroupItem value='sunday' aria-label='Toggle sunday'>
+          <span>Sunday</span>
         </ToggleGroupItem>
       </ToggleGroup>
     </div>
