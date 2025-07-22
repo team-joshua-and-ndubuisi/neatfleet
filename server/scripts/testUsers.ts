@@ -1,12 +1,12 @@
 // scripts/testUserQueries.ts
 
-import { 
-  createUser, 
-  getUserIdByEmail, 
-  deactivateUserByEmail,  
+import {
+  createUser,
+  getUserIdByEmail,
+  deactivateUserByEmail,
 } from '../src/services/userService';
 
-import {setUserAsAdmin, isAdmin} from '../src/services/adminService';
+import { setUserAsAdmin, isAdmin } from '../src/services/adminService';
 
 import prisma from '../src/config/prisma';
 
@@ -19,7 +19,7 @@ const userCreationObj = {
 };
 
 async function main() {
-  const {email, first_name} = userCreationObj;
+  const { email, first_name } = userCreationObj;
   // //Test 1, user creation, now check the database to see if what you created is there
   // const user = await createUser(userCreationObj);
   // console.log('Created user:', user);
@@ -39,11 +39,10 @@ async function main() {
   // //Test 5, given an email, check to see if the user is an admin
   // const isUserAdmin = await isAdmin(email);
   // console.log(`User with the email ${email} is an admin`);
-
 }
 
 main()
-  .catch((err) => {
+  .catch(err => {
     console.error('Error running script:', err);
   })
   .finally(async () => {

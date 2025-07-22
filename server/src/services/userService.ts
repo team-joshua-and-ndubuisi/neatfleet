@@ -1,4 +1,4 @@
-import prismaClient from "../config/prisma"; // Ensure your db connection is set up correctly
+import prismaClient from '../config/prisma'; // Ensure your db connection is set up correctly
 
 const getUserIdByEmail = async (email: string) => {
   try {
@@ -9,11 +9,11 @@ const getUserIdByEmail = async (email: string) => {
 
     return user?.id || null; // Return the ID or null if not found
   } catch (error: any) {
-    throw new Error(`Error fetching user id with email ${email}: ${error.message}`);
+    throw new Error(
+      `Error fetching user id with email ${email}: ${error.message}`
+    );
   }
 };
-
-
 
 const deactivateUserByEmail = async (email: string) => {
   try {
@@ -30,25 +30,26 @@ const deactivateUserByEmail = async (email: string) => {
     return updatedUser;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Error deactivating user with email ${email}: ${error.message}`);
+      throw new Error(
+        `Error deactivating user with email ${email}: ${error.message}`
+      );
     }
     throw new Error(`Unknown error deactivating user with email ${email}`);
   }
 };
 
-
 const createUser = async ({
-  first_name, 
+  first_name,
   last_name,
   email,
   phone,
-  password, 
-} : {
-  first_name: string, 
-  last_name: string, 
-  email: string, 
-  phone: string, 
-  password: string 
+  password,
+}: {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  password: string;
 }) => {
   try {
     const user = await prismaClient.user.create({
@@ -58,7 +59,6 @@ const createUser = async ({
         email,
         phone,
         password: password,
-
       },
     });
     return user;
@@ -67,8 +67,4 @@ const createUser = async ({
   }
 };
 
-export { 
-  getUserIdByEmail, 
-  createUser, 
-  deactivateUserByEmail, 
-};
+export { getUserIdByEmail, createUser, deactivateUserByEmail };
