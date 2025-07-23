@@ -2,7 +2,7 @@ import React from 'react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { cn } from '@/lib/utils';
 
-type DayT = {
+export type DayT = {
   value: string;
   label: string;
   dayOfWeek: number; // Optional, used for Sunday
@@ -19,20 +19,12 @@ const daysOfWeek: DayT[] = [
 ];
 
 type AvailableDayPickerPropT = {
-  selectedDate?: Date;
-  clickCallback?: (day: Date) => void;
+  clickCallback?: (day: DayT) => void;
 };
 
-export default function AvailableDayPicker({
-  selectedDate = new Date(),
-  clickCallback,
-}: AvailableDayPickerPropT) {
-  console.log('selectedDate', selectedDate);
-
-  const currentDate = new Date();
-
+export default function AvailableDayPicker({ clickCallback }: AvailableDayPickerPropT) {
   const selections = daysOfWeek.map(dayOfWeek => {
-    return createDaySelection(dayOfWeek, currentDate, clickCallback);
+    return createDaySelection(dayOfWeek, clickCallback);
   });
 
   return (
@@ -44,35 +36,19 @@ export default function AvailableDayPicker({
   );
 }
 
-function createDaySelection(day: DayT, currentDate: Date, clickCallback?: (day: Date) => void) {
-  const currentNumberOfDay = currentDate.getDay();
+function createDaySelection(day: DayT, clickCallback?: (day: DayT) => void) {
+  // const currentNumberOfDay = currentDate.getDay();
 
   // Check if the day is in the past compared to the current date
-  const isPastDay = day.dayOfWeek < currentNumberOfDay;
-
-  const isToday = day.dayOfWeek === currentNumberOfDay;
-
-  // Calculate the offset from the current day to the target day
-  // If the day is today, the offset is 0
-  const daysFromCurrentDay = day.dayOfWeek - currentNumberOfDay;
-
-  const dayOffset = isToday
-    ? 0
-    : daysFromCurrentDay < 0
-      ? 7 + daysFromCurrentDay
-      : daysFromCurrentDay;
-
-  const dayDate = new Date(currentDate);
-  dayDate.setDate(currentDate.getDate() + dayOffset);
 
   return (
     <ToggleGroupItem
-      onClick={() => clickCallback && clickCallback(dayDate)}
+      onClick={() => clickCallback && clickCallback(day)}
       key={String(day.label + day.value)}
       value={day.value}
       aria-label={`Toggle ${day.value}`}
-      className={cn('p-3', { 'bg-slate-500': isPastDay })}
-      disabled={isPastDay}
+      className='p-3'
+      //
     >
       <span>{day.label}</span>
     </ToggleGroupItem>

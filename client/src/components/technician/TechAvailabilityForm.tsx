@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AvailableDayPicker from './AvailableDayPicker';
 import AvailableTimePicker from './AvailableTimePicker';
 import { Button } from '../ui';
+import { DayT } from './AvailableDayPicker';
 
 const weekDays: { [key: number]: string } = {
   0: 'Sunday',
@@ -23,18 +24,29 @@ export default function TechAvailabilityForm() {
     end: new Date(new Date().setHours(currentDate.getHours() + 14)), // 14 hours later,
   };
 
-  const [selectedDay, setSelectedDay] = useState(weekDays[currentDate.getDay()]);
+  const [selectedDays, setSelectedDays] = useState<DayT[]>([]);
 
   const handleTimeClick = (time: Date) => {
     console.log('time click', time.toLocaleTimeString());
   };
 
-  const handleDayClick = (day: Date) => {
-    const dayOfWeek = day.getUTCDay();
-    const dayName = weekDays[dayOfWeek];
-    console.log('Selected day:', day.toLocaleDateString());
-    console.log('Selected day:', dayName);
-    setSelectedDay(dayName);
+  const handleDayClick = (day: DayT) => {
+    console.log('Selected day:', day.label);
+    setSelectedDays(prev => {
+      if (prev.length === 0) {
+        return [day];
+      }
+
+      // filter by label
+      let list = prev.filter(d => d.value !== day.value);
+
+      //if list is same size then day was not in list, add it
+      if (list.length === prev.length) {
+        list = [...prev, day];
+      }
+
+      return list.sort((a, b) => a.dayOfWeek - b.dayOfWeek); // Sort by dayOfWeek
+    });
   };
 
   return (
@@ -50,7 +62,13 @@ export default function TechAvailabilityForm() {
         </section>
 
         <section className='flex items-center justify-center'>
-          <h3 className='bg-accent p-2 rounded-2xl'>{selectedDay}</h3>
+          <h3 className='bg-accent p-2 rounded-2xl'>
+            {selectedDays.map(day => (
+              <span className='p-3' key={day.value + day.label}>
+                {day.label}
+              </span>
+            ))}
+          </h3>
         </section>
 
         <section>
