@@ -11,7 +11,7 @@ import ProfileContainer from '@/components/profile/ProfileContainer'
 // const URL = 'http://localhost5432'+endpoint
 
 const userData = {
-  type: "driver",
+  type: "tech",
   name: "JohnDoe123",
   bc: 42,
   years: 5,
@@ -64,6 +64,7 @@ let bookings = userData.bookings
   return(
     <div>
       <ProfileContainer>
+        <h1>Profile</h1>
         <ProfileMain
           userType={userData.type}
           userName={userData.name}
