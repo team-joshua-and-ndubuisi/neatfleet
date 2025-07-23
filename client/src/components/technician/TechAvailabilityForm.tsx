@@ -4,16 +4,6 @@ import AvailableTimePicker from './AvailableTimePicker';
 import { Button } from '../ui';
 import { DayT } from './AvailableDayPicker';
 
-const weekDays: { [key: number]: string } = {
-  0: 'Sunday',
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 'Saturday',
-};
-
 export default function TechAvailabilityForm() {
   const currentDate = new Date();
   currentDate.setHours(6, 0, 0, 0); // Set the current date to today at 6 AM
@@ -25,9 +15,26 @@ export default function TechAvailabilityForm() {
   };
 
   const [selectedDays, setSelectedDays] = useState<DayT[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  // const [schedule, setSchedule] = useState<scheduleT[]>([]);
 
   const handleTimeClick = (time: Date) => {
     console.log('time click', time.toLocaleTimeString());
+
+    setSelectedTimes(prev => {
+      if (prev.length === 0) {
+        return [time.toLocaleTimeString()];
+      }
+
+      // filter by time
+      let list = prev.filter(t => t !== time.toLocaleTimeString());
+
+      //if list is same size then time was not in list, add it
+      if (list.length === prev.length) {
+        list = [...prev, time.toLocaleTimeString()];
+      }
+      return list;
+    });
   };
 
   const handleDayClick = (day: DayT) => {
@@ -49,16 +56,27 @@ export default function TechAvailabilityForm() {
     });
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const schedule = selectedDays.map(day => ({
+      day: day.label,
+      timeSlots: selectedTimes,
+    }));
+
+    console.log('Schedule submitted:', schedule);
+  };
+
   return (
     <section>
-      <form action='' onSubmit={e => e.preventDefault()} className=''>
+      <form action='' onSubmit={handleSubmit} className=''>
         <section>
           <h2 className='text-4xl'>Set Your Availability</h2>
         </section>
 
         <section className='border-2 border-gray-200 mb-4 pb-4'>
           <h3 className='font-bold'>Select days available</h3>
-          <AvailableDayPicker clickCallback={handleDayClick} selectedDate={currentDate} />
+          <AvailableDayPicker clickCallback={handleDayClick} />
         </section>
 
         <section className='flex items-center justify-center'>
