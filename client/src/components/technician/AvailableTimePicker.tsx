@@ -37,7 +37,7 @@ function timeSelectionButton(time: Date, callback?: (time: Date) => void) {
     <ToggleGroup key={time.toUTCString()} variant='outline' type='multiple' className='w-full'>
       <ToggleGroupItem
         onClick={() => {
-          callback && callback(time);
+          if (callback) callback(time);
         }}
         value={hour}
         aria-label='Toggle'
