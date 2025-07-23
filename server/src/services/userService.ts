@@ -1,37 +1,55 @@
-import prismaClient from "../config/prisma"; // Ensure your db connection is set up correctly
+import prismaClient from '../config/prisma'; // Ensure your db connection is set up correctly
 
-const getUserById = async (id: string) => {
+const getUserIdByEmail = async (email: string) => {
   try {
     const user = await prismaClient.user.findUnique({
-      where: { id },
+      where: { email },
+      select: { id: true },
     });
-    return user;
+
+    return user?.id || null; // Return the ID or null if not found
   } catch (error: any) {
-    throw new Error(`Error fetching user with ID ${id}: ${error.message}`);
+    throw new Error(
+      `Error fetching user id with email ${email}: ${error.message}`
+    );
   }
 };
 
-const getAllUsers = async () => {
+const deactivateUserByEmail = async (email: string) => {
   try {
-    const users = await prismaClient.user.findMany();
-    return users;
-  } catch (error: any) {
-    throw new Error(`Error fetching users: ${error.message}`);
+    const user = await prismaClient.user.findUnique({ where: { email } });
+    if (!user) {
+      throw new Error(`User with email ${email} not found.`);
+    }
+
+    const updatedUser = await prismaClient.user.update({
+      where: { email },
+      data: { is_active: false },
+    });
+
+    return updatedUser;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(
+        `Error deactivating user with email ${email}: ${error.message}`
+      );
+    }
+    throw new Error(`Unknown error deactivating user with email ${email}`);
   }
 };
 
 const createUser = async ({
-  first_name, 
+  first_name,
   last_name,
   email,
   phone,
-  hashedPassword, 
-} : {
-  first_name: string, 
-  last_name: string, 
-  email: string, 
-  phone: string, 
-  hashedPassword: string 
+  password,
+}: {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  password: string;
 }) => {
   try {
     const user = await prismaClient.user.create({
@@ -40,8 +58,7 @@ const createUser = async ({
         last_name: last_name,
         email,
         phone,
-        password: hashedPassword,
-
+        password: password,
       },
     });
     return user;
@@ -50,4 +67,4 @@ const createUser = async ({
   }
 };
 
-export { getUserById, getAllUsers, createUser };
+export { getUserIdByEmail, createUser, deactivateUserByEmail };
