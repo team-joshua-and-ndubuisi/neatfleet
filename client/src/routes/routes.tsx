@@ -17,7 +17,6 @@ const ServiceCatalogPage = lazy(() => import('@/pages/ServiceCatalogPage'));
 const TechSelectionPage = lazy(() => import('@/pages/TechSelectionPage'));
 const ScheduleServicePage = lazy(() => import('@/pages/ScheduleServicePage'));
 const CartPaymentPage = lazy(() => import('@/pages/CartPaymentPage'));
-const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const StatusPage = lazy(() => import('@/pages/StatusPage'));
 const RatingPage = lazy(() => import('@/pages/RatingPage'));
 const ManageServicesPage = lazy(() => import('@/pages/ManageServicesPage'));
