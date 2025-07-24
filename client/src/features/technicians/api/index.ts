@@ -1,0 +1,1 @@
+export { fetchTechnicians } from './techniciansApi';
