@@ -1,31 +1,31 @@
-import fs from "fs";
-import path from "path";
-import passport from "passport";
-import { Strategy, ExtractJwt, StrategyOptions } from "passport-jwt";
+import fs from 'fs';
+import path from 'path';
+import passport from 'passport';
+import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 // import User from "../models/user";
 
-import prisma from "./prisma";
+import prisma from './prisma';
 const User = prisma.user;
 
 const rootDir = process.cwd();
-const pathToKey = path.join(rootDir, "id_rsa_pub.pem");
-const PUB_KEY = fs.readFileSync(pathToKey, "utf8");
+const pathToKey = path.join(rootDir, 'id_rsa_pub.pem');
+const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 const options: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: PUB_KEY,
-  algorithms: ["RS256"],
+  algorithms: ['RS256'],
 };
 
 const strategy = new Strategy(options, (payload, done) => {
   User.findUnique({ where: { id: payload.sub } })
-    .then((user) => {
+    .then(user => {
       if (user) {
         return done(null, user);
       } else {
         return done(null, false);
       }
     })
-    .catch((err) => done(err, null));
+    .catch(err => done(err, null));
 });
 
 passport.use(strategy);
