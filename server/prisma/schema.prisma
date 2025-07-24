@@ -10,12 +10,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id         String   @id @default(uuid())
+  id         String   @id @default(uuid()) @db.Uuid
   first_name String   @db.VarChar(255)
   last_name  String   @db.VarChar(255)
   email      String   @unique @db.VarChar(255)
@@ -23,5 +24,16 @@ model User {
   password   String   @db.VarChar(255)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  is_active  Boolean  @default(true)
+  admin      Admin? // <-- Opposite relation field
+
+  @@map("users")
 }
 
+model Admin {
+  id      String @id @default(uuid()) @db.Uuid
+  user_id String @unique @db.Uuid
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("admins") // This tells Prisma the actual table name is "admins"
+}
