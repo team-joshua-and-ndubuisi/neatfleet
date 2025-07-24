@@ -1,21 +1,107 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "John Doe",
-      "email": "john@example.com"
+      "id": "7d5f7ad0-2a1c-4e6a-baa6-167a3b8e5422",
+      "first_name": "Maria",
+      "last_name": "Lopez",
+      "email": "maria.lopez@example.com",
+      "phone": "+1-202-555-0134",
+      "password": "$2b$10$examplehash1",
+      "created_at": "2025-07-01T10:15:30Z",
+      "is_active": true
     },
     {
-      "id": "2",
-      "name": "Jane Doe",
-      "email": "jane@example.com"
+      "id": "3c1e93aa-c7f0-4f8d-973f-8c4c4b22f3ee",
+      "first_name": "James",
+      "last_name": "Nguyen",
+      "email": "james.nguyen@example.com",
+      "phone": "+1-202-555-0173",
+      "password": "$2b$10$examplehash2",
+      "created_at": "2025-07-02T14:27:15Z",
+      "is_active": true
     },
     {
-      "id": "3",
-      "name": "Andrew Smith",
-      "email": "meuzishun@gmail.com"
+      "id": "f69a157f-76a1-44e1-a7b2-1cfb8aa1d0e0",
+      "first_name": "Alicia",
+      "last_name": "Martinez",
+      "email": "alicia.martinez@example.com",
+      "phone": "+1-202-555-0101",
+      "password": "$2b$10$examplehash3",
+      "created_at": "2025-07-03T08:40:12Z",
+      "is_active": true
+    },
+    {
+      "id": "2ec38f00-3d75-4642-9510-39135112cd1a",
+      "first_name": "Derek",
+      "last_name": "White",
+      "email": "derek.white@example.com",
+      "phone": "+1-202-555-0199",
+      "password": "$2b$10$examplehash4",
+      "created_at": "2025-07-04T11:55:00Z",
+      "is_active": true
+    },
+    {
+      "id": "b02a13ab-5749-4f9c-81d5-35440c8a5dbf",
+      "first_name": "Sophia",
+      "last_name": "Chen",
+      "email": "sophia.chen@example.com",
+      "phone": "+1-202-555-0128",
+      "password": "$2b$10$examplehash5",
+      "created_at": "2025-07-05T09:21:45Z",
+      "is_active": true
+    },
+    {
+      "id": "1e8e1733-85e7-4d90-9126-1e59c6e7fbc0",
+      "first_name": "Anthony",
+      "last_name": "Jackson",
+      "email": "anthony.jackson@example.com",
+      "phone": "+1-202-555-0184",
+      "password": "$2b$10$examplehash6",
+      "created_at": "2025-07-06T13:30:00Z",
+      "is_active": true
+    },
+    {
+      "id": "f91b9fc9-671f-41df-84c6-e7c9a135f382",
+      "first_name": "Liam",
+      "last_name": "Patel",
+      "email": "liam.patel@example.com",
+      "phone": "+1-202-555-0147",
+      "password": "$2b$10$examplehash7",
+      "created_at": "2025-07-07T10:10:10Z",
+      "is_active": true
+    },
+    {
+      "id": "0f90ab13-9a93-4f02-9755-29dc4fa29a9c",
+      "first_name": "Emma",
+      "last_name": "Brooks",
+      "email": "emma.brooks@example.com",
+      "phone": "+1-202-555-0162",
+      "password": "$2b$10$examplehash8",
+      "created_at": "2025-07-08T16:45:22Z",
+      "is_active": true
+    },
+    {
+      "id": "e25fbcad-9a2e-438e-bbb0-8a0c1883f8fa",
+      "first_name": "Noah",
+      "last_name": "Williams",
+      "email": "noah.williams@example.com",
+      "phone": "+1-202-555-0155",
+      "password": "$2b$10$examplehash9",
+      "created_at": "2025-07-09T12:00:00Z",
+      "is_active": false
+    },
+    {
+      "id": "c6e4e646-c097-4f42-964e-bf750c6c29cc",
+      "first_name": "Grace",
+      "last_name": "Kim",
+      "email": "grace.kim@example.com",
+      "phone": "+1-202-555-0111",
+      "password": "$2b$10$examplehash10",
+      "created_at": "2025-07-10T18:18:18Z",
+      "is_active": true
     }
   ],
+
   "posts": [
     {
       "id": "1",
@@ -28,6 +114,110 @@
       "title": "Another bloated tool 🙄",
       "content": "Scaffolder? More like Scuffle-der. I gave it a shot, and now my project’s directory looks like a file hoarder’s dream. Do I really need 10 different files just to add a button? What’s next? A template for writing comments?\n\nHonestly, this is just overengineering for the sake of it. Back in my day, we copy-pasted everything like true warriors. But hey, if you enjoy pretending you’re a code wizard while a script does the real work, go for it. 🙃",
       "user": "GrumpyDev42"
+    }
+  ],
+  "services": [
+    {
+      "id": "3f8d8a2e-5e13-4d8a-8b35-90c0d40c1b01",
+      "name": "Standard House Cleaning",
+      "description": "A thorough cleaning of all common areas, bedrooms, and bathrooms. Includes dusting, vacuuming, mopping, and surface disinfection."
+    },
+    {
+      "id": "f77b9a0d-f3ee-4f1b-8a79-fb86a54763f2",
+      "name": "Deep Cleaning",
+      "description": "An intensive cleaning service targeting neglected and hard-to-reach areas, such as baseboards, behind appliances, and ceiling fans."
+    },
+    {
+      "id": "a9b9e19c-7ae2-46f9-9bd7-02894736f78e",
+      "name": "Move-In/Move-Out Cleaning",
+      "description": "A comprehensive cleaning service designed to prepare a home for moving in or out. Includes inside of appliances, cabinets, and closets."
+    },
+    {
+      "id": "aa1492e4-91e0-4d59-87a1-5b2cf30f98ea",
+      "name": "Plumbing Repairs",
+      "description": "Fixes for common plumbing issues such as leaky faucets, clogged drains, running toilets, and minor pipe repairs."
+    },
+    {
+      "id": "529b9b95-4419-4c6f-91b1-5a7e3b72f027",
+      "name": "Electrical Repairs",
+      "description": "Troubleshooting and repair of light fixtures, switches, outlets, and circuit breakers. Includes ceiling fan installation."
+    },
+    {
+      "id": "82c5b4ec-b930-48c1-9f67-743acbd5ae35",
+      "name": "Handyman Services",
+      "description": "General home maintenance tasks such as hanging shelves, assembling furniture, patching drywall, and installing fixtures."
+    },
+    {
+      "id": "c1fe6ac3-30b2-4f79-8c1f-4b11a561f21b",
+      "name": "Window Cleaning",
+      "description": "Streak-free interior and exterior window cleaning, including frames and sills. Ladders used for second-story windows."
+    },
+    {
+      "id": "bc2a24dc-83f1-4d29-b32a-f879e3949de4",
+      "name": "Gutter Cleaning",
+      "description": "Removal of leaves and debris from gutters and downspouts to ensure proper drainage and prevent water damage."
+    }
+  ],
+  "technicians": [
+    {
+      "id": "b3f23e7c-8f10-4b52-a0d1-5bba07eb9f41",
+      "user_id": "7d5f7ad0-2a1c-4e6a-baa6-167a3b8e5422",
+      "first_name": "Maria",
+      "last_name": "Lopez",
+      "email": "maria.lopez@example.com",
+      "phone": "+1-202-555-0134",
+      "password": "$2b$10$examplehash1",
+      "created_at": "2025-07-01T10:15:30Z",
+      "is_active": true,
+      "current_rating": 4.7
+    },
+    {
+      "id": "e1a36a68-d97f-49fc-b1ea-cc3fdb71b826",
+      "user_id": "3c1e93aa-c7f0-4f8d-973f-8c4c4b22f3ee",
+      "first_name": "James",
+      "last_name": "Nguyen",
+      "email": "james.nguyen@example.com",
+      "phone": "+1-202-555-0173",
+      "password": "$2b$10$examplehash2",
+      "created_at": "2025-07-02T14:27:15Z",
+      "is_active": true,
+      "current_rating": 4.3
+    },
+    {
+      "id": "3f839d35-4f33-42a2-8b4a-e56a0b3c8af8",
+      "user_id": "f69a157f-76a1-44e1-a7b2-1cfb8aa1d0e0",
+      "first_name": "Alicia",
+      "last_name": "Martinez",
+      "email": "alicia.martinez@example.com",
+      "phone": "+1-202-555-0101",
+      "password": "$2b$10$examplehash3",
+      "created_at": "2025-07-03T08:40:12Z",
+      "is_active": true,
+      "current_rating": 4.9
+    },
+    {
+      "id": "5a2047cb-5d11-4f4f-9f1b-5477853fc8bc",
+      "user_id": "2ec38f00-3d75-4642-9510-39135112cd1a",
+      "first_name": "Derek",
+      "last_name": "White",
+      "email": "derek.white@example.com",
+      "phone": "+1-202-555-0199",
+      "password": "$2b$10$examplehash4",
+      "created_at": "2025-07-04T11:55:00Z",
+      "is_active": true,
+      "current_rating": 3.8
+    },
+    {
+      "id": "a974c9d5-b2f2-4f43-b537-473af02e04c5",
+      "user_id": "b02a13ab-5749-4f9c-81d5-35440c8a5dbf",
+      "first_name": "Sophia",
+      "last_name": "Chen",
+      "email": "sophia.chen@example.com",
+      "phone": "+1-202-555-0128",
+      "password": "$2b$10$examplehash5",
+      "created_at": "2025-07-05T09:21:45Z",
+      "is_active": true,
+      "current_rating": 4.5
     }
   ]
 }
