@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom'
     bookingsCompleted?: number, //Admin Only
     years: number,
     rating?: number, //techs only
-    bookings: any, //client only
+    bookings: [] | number, //client only
     location: string,
     image?: string,
   }

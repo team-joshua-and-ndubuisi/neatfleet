@@ -5,7 +5,7 @@ import BookingCard from '@/components/profile/BookingCard'
 import BookingSnippet from '@/components/profile/BookingSnippet'
 import ProfileMain from '@/components/profile/ProfileMain'
 import ProfileContainer from '@/components/profile/ProfileContainer'
-import { Star } from 'lucide-react';
+// import { Star } from 'lucide-react';
 
 
 //for when the api is set up
@@ -54,7 +54,7 @@ const userData = {
 
 const ProfilePage: React.FC = () => {
 // const [userData, setUserData]=useState(null)
-let bookings = userData.bookings
+const bookings = userData.bookings
 
 // useEffect(() =>{
 //Fetch for user model + bookings

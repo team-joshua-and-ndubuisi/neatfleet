@@ -3,9 +3,9 @@ import React from 'react'
 interface BookingProps{
     name: string,
     status: string,
-    date: any,
+    date: number|string,
     details: string,
-    rating: any
+    rating: number
 }
 
    const BookingCard: React.FC<BookingProps>=({name,status,date,details,rating})=>{
