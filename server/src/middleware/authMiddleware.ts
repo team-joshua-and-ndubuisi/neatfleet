@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from "express";
-
-const passport = require("passport");
+import { NextFunction, Request, Response } from 'express';
+import passport from 'passport';
 
 const isAuth = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate(
-    "jwt",
+    'jwt',
     { session: false },
     (err: any, user: any, info: any) => {
       if (err) {
@@ -12,7 +11,7 @@ const isAuth = (req: Request, res: Response, next: NextFunction) => {
       }
 
       if (!user) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: 'Unauthorized' });
       }
 
       req.user = user;
@@ -23,12 +22,12 @@ const isAuth = (req: Request, res: Response, next: NextFunction) => {
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   //@ts-expect-error isAdmin is a boolean on the user object
   if (!req.user.isAdmin) {
-    return res.status(403).json({ message: "Forbidden: Admins only" });
+    return res.status(403).json({ message: 'Forbidden: Admins only' });
   }
 
   next();

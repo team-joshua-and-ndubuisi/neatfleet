@@ -4,11 +4,11 @@ import {
   createUser,
   getUserIdByEmail,
   deactivateUserByEmail,
-} from '../src/services/userService';
+} from '../services/userService';
 
-import { setUserAsAdmin, isAdmin } from '../src/services/adminService';
+import { setUserAsAdmin, isAdmin } from '../services/adminService';
 
-import prisma from '../src/config/prisma';
+import prisma from '../config/prisma';
 
 const userCreationObj = {
   first_name: 'Bob',

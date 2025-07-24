@@ -24,10 +24,8 @@ function issueJWT(user: { id: string }) {
 
   return {
     token: signedToken,
-    expires: expiresIn,
+    expiresIn: expiresIn,
   };
 }
 
-module.exports = {
-  issueJWT,
-};
+export default issueJWT;

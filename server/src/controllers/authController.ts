@@ -1,8 +1,7 @@
-const asyncHandler = require('express-async-handler');
-const bcrypt = require('bcrypt');
-const { issueJWT } = require('../lib/issueJWT');
-const { logger } = require('../config/logger');
-
+import asyncHandler from 'express-async-handler';
+import bcrypt from 'bcrypt';
+import issueJWT from '../lib/issueJWT';
+import { logger } from '../config/logger';
 import { NextFunction, Request, Response } from 'express';
 import prisma from '../config/prisma'; //connection to Prisma client
 import { User as UserType } from '../../generated/prisma'; // dealing with only user table
@@ -15,7 +14,11 @@ const User = prisma.user;
 // @route   POST /register
 // @access  Public
 const registerUser = asyncHandler(
-  async (req: Request<{}, {}, UserType>, res: Response, next: NextFunction) => {
+  async (
+    req: Request<unknown, unknown, UserType>,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     const { first_name, last_name, email, password, phone } = req.body;
     logger.info('Attempting to register user', {
       first_name,
@@ -31,7 +34,8 @@ const registerUser = asyncHandler(
       );
       const error: ExtendedErrorT = new Error('User already exists');
       error.statusCode = 400;
-      return next(error);
+      next(error);
+      return;
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -42,21 +46,22 @@ const registerUser = asyncHandler(
       last_name: last_name,
       email,
       phone,
-      hashedPassword: hashedPassword,
+      password: hashedPassword,
     });
 
     if (!user) {
       logger.error(`Registration failed for ${first_name} ${last_name}`);
       const error: ExtendedErrorT = new Error('User registration failed');
       error.statusCode = 400;
-      return next(error);
+      next(error);
+      return;
     }
 
     const tokenData = issueJWT(user);
 
     logger.info(`${first_name} ${last_name} has been successfully registered`);
 
-    return res.status(201).json({
+    res.status(201).json({
       user: {
         id: user.id,
         first_name: user.first_name,
@@ -73,7 +78,7 @@ const registerUser = asyncHandler(
 // @route   POST /login
 // @access  Public
 const loginUser = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password } = req.body;
     logger.info(`Attempting to login user with ${email}...`);
 
@@ -83,7 +88,8 @@ const loginUser = asyncHandler(
       logger.warn(`No user exists with email ${email}`);
       const error: ExtendedErrorT = new Error('No user exists with that email');
       error.statusCode = 404;
-      return next(error);
+      next(error);
+      return;
     }
 
     const passwordsMatch = await bcrypt.compare(password, user.password);
@@ -94,14 +100,15 @@ const loginUser = asyncHandler(
         'Incorrect password, please try again'
       );
       error.statusCode = 401;
-      return next(error);
+      next(error);
+      return;
     }
 
     const tokenData = issueJWT(user);
 
     logger.info(`${user.first_name} ${user.last_name} has been logged in`);
 
-    return res.status(200).json({
+    res.status(200).json({
       user: {
         id: user.id,
         first_name: user.first_name,
@@ -117,21 +124,18 @@ const loginUser = asyncHandler(
 // @desc    Get user profile
 // @route   GET /profile
 // @access  Private
-interface AuthenticatedRequest extends Request {
-  user?: UserType;
-}
-
 const userProfile = asyncHandler(
-  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (!req.user) {
-      return res.status(401).json({ message: 'User not authenticated' });
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
     }
 
-    const id = req.user.id;
+    const userId = (req.user as UserType).id;
 
-    logger.info(`Attempting to find user with id ${req.user.id}`);
+    logger.info(`Attempting to find user with id ${userId}`);
     const user = await User.findUnique({
-      where: { id: req.user.id },
+      where: { id: userId },
       select: {
         id: true,
         first_name: true,
@@ -142,14 +146,15 @@ const userProfile = asyncHandler(
     });
 
     if (!user) {
-      logger.warn(`No user found with id ${req.user.id}`);
+      logger.warn(`No user found with id ${userId}`);
       const error: ExtendedErrorT = new Error('No user found');
       error.statusCode = 404;
-      return next(error);
+      next(error);
+      return;
     }
 
     logger.info(`User found`, user);
-    return res.status(200).json({ user });
+    res.status(200).json({ user });
   }
 );
 
@@ -157,14 +162,15 @@ const userProfile = asyncHandler(
 // @route   PUT /profile
 // @access  Private
 const editProfile = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (!req.user) {
       const error: ExtendedErrorT = new Error('User not authenticated');
       error.statusCode = 401;
-      return next(error);
+      next(error);
+      return;
     }
-    //@ts-expect-error user will need to be authenticated before this route is hit id will exist
-    const userId = req.user.id;
+
+    const userId = (req.user as UserType).id;
 
     const { first_name, last_name, email, currentPassword, newPassword } =
       req.body;
@@ -177,7 +183,8 @@ const editProfile = asyncHandler(
       logger.warn(`No user found with id ${userId}`);
       const error: ExtendedErrorT = new Error('No user found');
       error.statusCode = 404;
-      return next(error);
+      next(error);
+      return;
     }
 
     if (first_name) user.first_name = first_name;
@@ -190,7 +197,8 @@ const editProfile = asyncHandler(
           'Both currentPassword and newPassword are required to change password'
         );
         error.statusCode = 400;
-        return next(error);
+        next(error);
+        return;
       }
 
       const isMatch = await bcrypt.compare(currentPassword, user.password);
@@ -200,7 +208,8 @@ const editProfile = asyncHandler(
           'Current password is incorrect'
         );
         error.statusCode = 401;
-        return next(error);
+        next(error);
+        return;
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -232,9 +241,8 @@ const editProfile = asyncHandler(
 // @route   DELETE /profile
 // @access  Private
 const deleteProfile = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    //@ts-expect-error user will need to be authenticated before this route is hit id will exist
-    const userId = req.user.id;
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = (req.user as UserType).id;
 
     const user = await User.findUnique({
       where: { id: userId },
@@ -244,7 +252,8 @@ const deleteProfile = asyncHandler(
       logger.warn(`No user found with id ${userId}`);
       const error: ExtendedErrorT = new Error('No user found');
       error.statusCode = 404;
-      return next(error);
+      next(error);
+      return;
     }
 
     await User.delete({ where: { id: userId } });
