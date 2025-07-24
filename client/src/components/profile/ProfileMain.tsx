@@ -20,27 +20,27 @@ import {Link} from 'react-router-dom'
         <div className="flex w-full h-1/2 border-3 border border-black py-10 flex-col  lg:flex-row lg:justify-center  md:flex-row md:justify-center rounded">
             <div className='flex flex-col items-center '>
                 <img width="100%" className="border border-black size-100 rounded" src={image} alt="Profile Picture"/>
-                <span className=" text-3xl font-semibold py-5">{userName} Name</span>
-                <span className="text-3xl  py-5">{location} Memphis, Alabama</span>
+                <span className=" text-3xl font-semibold py-5">{userName}</span>
+                <span className="text-3xl text-center py-5">{location} Memphis, Alabama</span>
             </div>
             <div className="flex mx-30">
               <div className=" flex flex-col items-center justify-around ">
                 <span
-                className="py-5 text-2xl font-semibold"
+                className="py-5 text-2xl font-semibold text-center"
                 >
-                    Number of Bookings
+                    Number of Bookings: <br />
                     {bookings}
                 </span>
                 <span
-                className="py-5 text-2xl font-semibold"
+                className="py-5 text-center text-2xl font-semibold"
                 >
+                  Rating <br />
                     {rating}
-                    Rating
                 </span>
                 <span
-                className="py-5 text-2xl font-semibold"
+                className="py-5 text-2xl font-semibold text-center"
                 >
-                    Years at  NeatFleet
+                    Years at  NeatFleet: <br />
                     {years}
                 </span>
             {/* Menu Items for techs  */}
