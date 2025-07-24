@@ -10,7 +10,7 @@ const User: React.FC<UserProps> = ({ user }) => {
   return (
     <li className='flex items-center px-4 py-2'>
       <p className='text-base text-foreground'>
-        {user.name} -{' '}
+        {user.first_name} -{' '}
         <a
           href={`mailto:${user.email}`}
           className={cn(
