@@ -3,34 +3,31 @@ import React from 'react'
 interface BookingProps{
     name: string,
     status: string,
-    date: number,
+    date: number|string,
     details: string,
     rating: number
 }
-  
+
    const BookingCard: React.FC<BookingProps>=({name,status,date,details,rating})=>{
     return (
-      <div>
-       <div className="w-full flex py-10">
-            <div className="border border-black py-5 px-15 text-xl border-round-5x rounded-tl-lg rounded-bl-lg">
-                Name
-                 <span>{name}</span>
+      <div className="parent-container">
+       <div className="flex py-10">
+            <div className="border border-black py-3 w-1/5 text-wrap text-center lg:text-xl md:text-xl text-sm  border-round-5x rounded-tl-lg rounded-bl-lg">
+
+                 <span> Name: {name}</span>
             </div>
-            <div className="border border-black py-5 px-15 text-xl border-round-5x">
-                Status
+            <div className="border border-black py-3 text-wrap text-center w-1/5 lg:text-xl md:text-xl text-sm border-round-5x">
                 <span>{status}</span>
             </div>
-            <div className="border border-black py-5 px-15 text-xl border-round-5x">
-                Rating
-                <span>{date}</span>
+            <div className="border border-black py-3 text-wrap text-center w-1/5 lg:text-xl md:text-xl text-sm border-round-5x">
+                <span>Service Date: {date}</span>
             </div>
-            <div className="border border-black py-5 px-15 text-xl border-round-5x">
-                Details
+            <div className="border border-black py-3 text-wrap text-center w-1/5 lg:text-xl md:text-xl text-sm border-round-5x">
+
                 <span>{details}</span>
             </div>
-             <div className="border border-black py-5 px-15 text-xl border-round-5x rounded-br-lg rounded-tr-lg">
-                Rating
-                <span>{rating}</span>
+             <div className="flex flex-row border border-black py-3 text-wrap text-center w-1/5 lg:text-xl md:text-xl text-sm border-round-5x rounded-br-lg rounded-tr-lg text-center">
+                <span>Rating: {rating}</span>
             </div>
        </div>
       </div>

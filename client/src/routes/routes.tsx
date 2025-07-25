@@ -17,7 +17,6 @@ const ServiceCatalogPage = lazy(() => import('@/pages/ServiceCatalogPage'));
 const TechSelectionPage = lazy(() => import('@/pages/TechSelectionPage'));
 const ScheduleServicePage = lazy(() => import('@/pages/ScheduleServicePage'));
 const CartPaymentPage = lazy(() => import('@/pages/CartPaymentPage'));
-const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const StatusPage = lazy(() => import('@/pages/StatusPage'));
 const RatingPage = lazy(() => import('@/pages/RatingPage'));
 const ManageServicesPage = lazy(() => import('@/pages/ManageServicesPage'));
@@ -25,6 +24,7 @@ const ManageTechniciansPage = lazy(
   () => import('@/pages/ManageTechniciansPage')
 );
 const ManageSchedulePage = lazy(() => import('@/pages/ManageSchedulePage'));
+const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 const AppRoutes: React.FC = () => {
@@ -56,6 +56,10 @@ const AppRoutes: React.FC = () => {
                 path='manage-technicians'
                 element={<ManageTechniciansPage />}
               />
+              <Route
+              path="/profile"
+              element={<ProfilePage />}
+               />
               <Route
                 path='manage-availability'
                 element={<ManageSchedulePage />}
