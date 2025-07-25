@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button } from '@/components';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { NavItemType } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -10,35 +12,69 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ heading, navItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const NavItems = ({ mobile = false }: { mobile?: boolean }) => (
+    <ul className={cn(mobile ? 'flex flex-col space-y-2' : 'flex space-x-2')}>
+      {navItems.map(item => (
+        <li key={item.text}>
+          <NavLink
+            to={item.path}
+            onClick={() => mobile && setIsOpen(false)}
+            className={({ isActive }) =>
+              cn('inline-block', isActive ? 'bg-primary-foreground/20 rounded-md' : '')
+            }
+          >
+            <Button
+              variant='ghost'
+              className={cn(
+                mobile
+                  ? 'text-foreground hover:bg-accent hover:text-accent-foreground w-full justify-start'
+                  : 'text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground',
+                'transition-colors duration-200 text-lg'
+              )}
+            >
+              {item.text}
+            </Button>
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <nav className='bg-blue-500 text-primary-foreground shadow-md'>
       <div className='flex justify-between items-center px-6 py-4'>
-        <h1 className='text-4xl'>{heading}</h1>
-        <ul className='flex space-x-2'>
-          {navItems.map((item) => (
-            <li key={item.text}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    'inline-block',
-                    isActive ? 'bg-primary-foreground/20 rounded-md' : ''
-                  )
-                }
+        <h1 className='text-2xl md:text-4xl font-bold'>{heading}</h1>
+
+        {/* Desktop Navigation */}
+        <div className='hidden md:block'>
+          <NavItems />
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className='md:hidden'>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant='ghost'
+                size='icon'
+                className='text-primary-foreground hover:bg-primary-foreground/10'
               >
-                <Button
-                  variant='ghost'
-                  className={cn(
-                    'text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground',
-                    'transition-colors duration-200 text-lg text-center'
-                  )}
-                >
-                  {item.text}
-                </Button>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+                <Menu className='h-6 w-6' />
+                <span className='sr-only'>Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side='right' className='w-[300px] sm:w-[400px]'>
+              <SheetHeader>
+                <SheetTitle className='text-left'>{heading}</SheetTitle>
+              </SheetHeader>
+              <div className='mt-6'>
+                <NavItems mobile />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </nav>
   );

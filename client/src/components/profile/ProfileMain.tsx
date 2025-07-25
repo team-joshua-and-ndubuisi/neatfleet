@@ -1,50 +1,50 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-  //Menu at top of profile loaded based on the type of user 
+  //Menu at top of profile loaded based on the type of user
   interface UserMenuProp{
     userType: string,
     userName: string,
     bookingsCompleted?: number, //Admin Only
-    years: number, 
+    years: number,
     rating?: number, //techs only
-    bookings: number, //client only
+    bookings: [] | number, //client only
     location: string,
     image?: string,
   }
-  
- 
+
+
    const ProfileMain: React.FC<UserMenuProp> =({userType,userName,years, location,image, bookings,rating })=>{
     return (
       <div className="bg-stone-300 ">
         <div className="flex w-full h-1/2 border-3 border border-black py-10 flex-col  lg:flex-row lg:justify-center  md:flex-row md:justify-center rounded">
             <div className='flex flex-col items-center '>
                 <img width="100%" className="border border-black size-100 rounded" src={image} alt="Profile Picture"/>
-                <span className=" text-3xl font-semibold py-5">{userName} Name</span>
-                <span className="text-3xl  py-5">{location} Memphis, Alabama</span>
+                <span className=" text-3xl font-semibold py-5">{userName}</span>
+                <span className="text-3xl text-center py-5">{location} Memphis, Alabama</span>
             </div>
             <div className="flex mx-30">
               <div className=" flex flex-col items-center justify-around ">
                 <span
-                className="py-5 text-2xl font-semibold"
+                className="py-5 text-2xl font-semibold text-center"
                 >
-                    Number of Bookings
+                    Number of Bookings: <br />
                     {bookings}
                 </span>
                 <span
-                className="py-5 text-2xl font-semibold"
+                className="py-5 text-center text-2xl font-semibold"
                 >
+                  Rating <br />
                     {rating}
-                    Rating
                 </span>
                 <span
-                className="py-5 text-2xl font-semibold"
+                className="py-5 text-2xl font-semibold text-center"
                 >
-                    Years at  NeatFleet
+                    Years at  NeatFleet: <br />
                     {years}
                 </span>
             {/* Menu Items for techs  */}
-                {userType==="tech" && 
+                {userType==="tech" &&
                     <div className="flex flex-col items-center">
                         <Link
                         to="/profile/manage-services"
@@ -63,9 +63,9 @@ import {Link} from 'react-router-dom'
                             </span>
                         </Link>
                     </div>
-                     } 
+                     }
                 {/* Menu Items for Admin */}
-                {userType==="admin" && 
+                {userType==="admin" &&
                  <div className="flex flex-col items-center">
                         <Link
                         to="/profile/manage-technicians"
@@ -84,12 +84,12 @@ import {Link} from 'react-router-dom'
                             </span>
                         </Link>
                     </div>
-                } 
-              </div>  
+                }
+              </div>
             </div>
 
         </div>
-          
+
       </div>
     )
    }
