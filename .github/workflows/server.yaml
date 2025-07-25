@@ -3,6 +3,7 @@ name: CI/CD for Server
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
 on:
   push:
@@ -36,7 +37,7 @@ jobs:
         working-directory: ./server
         run: npm run build
 
-  deploy:
+  CD:
     needs: CI
     runs-on: ubuntu-latest
 
@@ -59,6 +60,9 @@ jobs:
 
       - name: Deploy to Vercel
         working-directory: ./server
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: npx vercel --prod --token $VERCEL_TOKEN
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ] && [ "${{ github.event_name }}" = "push" ]; then
+            npx vercel --prod --token $VERCEL_TOKEN
+          else
+            npx vercel --token $VERCEL_TOKEN
+          fi
