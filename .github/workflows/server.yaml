@@ -42,6 +42,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate environment variables
+        run: |
+          if [ -z "${{ env.VERCEL_ORG_ID }}" ]; then
+            echo "VERCEL_ORG_ID is not set"
+            exit 1
+          fi
+          if [ -z "${{ env.VERCEL_PROJECT_ID }}" ]; then
+            echo "VERCEL_PROJECT_ID is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "VERCEL_TOKEN is not set"
+            exit 1
+          fi
+
       - name: Checkout code
         uses: actions/checkout@v3
 
