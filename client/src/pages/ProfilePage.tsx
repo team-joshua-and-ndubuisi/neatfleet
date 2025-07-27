@@ -6,10 +6,10 @@ const ClientProfile: React.FC = () => {
     <div className='mt-16 px-8'>
       <h4 className='text-3xl mb-4'>Client Profile Page</h4>
       <div className='flex gap-2'>
-        <Link className='text-white bg-blue-400 p-4' to='rating'>
+        <Link className='text-white bg-primary-600 p-4' to='rating'>
           View rating
         </Link>
-        <Link className='text-white bg-blue-400 p-4' to='status'>
+        <Link className='text-white bg-primary-600 p-4' to='status'>
           Check status
         </Link>
       </div>
@@ -22,10 +22,10 @@ const TechnicianProfile: React.FC = () => {
     <div className='mt-16 px-8'>
       <h4 className='text-3xl mb-4'>Technician Profile Page</h4>
       <div className='flex gap-2'>
-        <Link className='text-white bg-blue-400 p-4' to='manage-services'>
+        <Link className='text-white bg-primary-600 p-4' to='manage-services'>
           Manage your services
         </Link>
-        <Link className='text-white bg-blue-400 p-4' to='manage-availability'>
+        <Link className='text-white bg-primary-600 p-4' to='manage-availability'>
           Manage your availability
         </Link>
       </div>
@@ -38,10 +38,10 @@ const AdminProfile: React.FC = () => {
     <div className='mt-16 px-8'>
       <h4 className='text-3xl mb-4'>Admin Profile Page</h4>
       <div className='flex gap-2'>
-        <Link className='text-white bg-blue-400 p-4' to='manage-services'>
+        <Link className='text-white bg-primary-600 p-4' to='manage-services'>
           Manage Services
         </Link>
-        <Link className='text-white bg-blue-400 p-4' to='manage-technicians'>
+        <Link className='text-white bg-primary-600 p-4' to='manage-technicians'>
           Manage Technicians
         </Link>
       </div>
