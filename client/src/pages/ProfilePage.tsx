@@ -1,64 +1,128 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import {useState, useEffect} from 'react';
+// import axios from "axios";
+import BookingCard from '@/components/profile/BookingCard'
+import BookingSnippet from '@/components/profile/BookingSnippet'
+import ProfileMain from '@/components/profile/ProfileMain'
+import ProfileContainer from '@/components/profile/ProfileContainer'
+// import { Star } from 'lucide-react';
 
-const ClientProfile: React.FC = () => {
-  return (
-    <div className='mt-16 px-8'>
-      <h4 className='text-3xl mb-4'>Client Profile Page</h4>
-      <div className='flex gap-2'>
-        <Link className='text-white bg-blue-400 p-4' to='rating'>
-          View rating
-        </Link>
-        <Link className='text-white bg-blue-400 p-4' to='status'>
-          Check status
-        </Link>
-      </div>
-    </div>
-  );
-};
 
-const TechnicianProfile: React.FC = () => {
-  return (
-    <div className='mt-16 px-8'>
-      <h4 className='text-3xl mb-4'>Technician Profile Page</h4>
-      <div className='flex gap-2'>
-        <Link className='text-white bg-blue-400 p-4' to='manage-services'>
-          Manage your services
-        </Link>
-        <Link className='text-white bg-blue-400 p-4' to='manage-availability'>
-          Manage your availability
-        </Link>
-      </div>
-    </div>
-  );
-};
+//for when the api is set up
+// const endpoint='/profile'
+// const URL = 'http://localhost5432'+endpoint
 
-const AdminProfile: React.FC = () => {
-  return (
-    <div className='mt-16 px-8'>
-      <h4 className='text-3xl mb-4'>Admin Profile Page</h4>
-      <div className='flex gap-2'>
-        <Link className='text-white bg-blue-400 p-4' to='manage-services'>
-          Manage Services
-        </Link>
-        <Link className='text-white bg-blue-400 p-4' to='manage-technicians'>
-          Manage Technicians
-        </Link>
-      </div>
-    </div>
-  );
+const userData = {
+  type: "",
+  name: "JohnDoe123",
+  bc: 42,
+  years: 5,
+  rating: 4.7,
+  bookings: [
+    {
+      name: "Alice Johnson",
+      status: "completed",
+      date: 1672531200000,
+      details: "Airport transfer from downtown to JFK",
+      rating: 5
+    },
+    {
+      name: "Robert Smith",
+      status: "completed",
+      date: 1675209600000,
+      details: "Business meeting commute",
+      rating: 4
+    },
+    {
+      name: "Maria Garcia",
+      status: "cancelled",
+      date: 1677888000000,
+      details: "Weekend city tour",
+      rating: 0
+    },
+    {
+      name: "James Wilson",
+      status: "upcoming",
+      date: 1680566400000,
+      details: "Concert venue drop-off",
+      rating: 0
+    }
+  ],
+  location: "New York, NY",
+  image: "https://example.com/profile-pictures/johndoe.jpg"
 };
 
 const ProfilePage: React.FC = () => {
-  // Imagine this some logic to figure out the type of user...
-  type UserType = 'client' | 'technician' | 'admin';
-  const user: UserType = 'admin' as UserType;
+// const [userData, setUserData]=useState(null)
+const bookings = userData.bookings
 
-  if (user === 'technician') return <TechnicianProfile />;
+// useEffect(() =>{
+//Fetch for user model + bookings
+//      axios.get(URL).then((response) => {
+//        setUserData(response.data);
+//      })
+//      let bookings:[] = userData.bookings
+// }, [])
 
-  if (user === 'admin') return <AdminProfile />;
+function convertDate(date:number){
 
-  return <ClientProfile />;
-};
+const newdate = new Date(date);
 
-export default ProfilePage;
+// Extract components
+const day = newdate.getDate();
+const month = newdate.getMonth() + 1;
+const year = newdate.getFullYear();
+
+return`${day}/${month}/${year}`;
+}
+// function getStars(rating:any){
+//   const stars= Array(5).fill(0)
+
+//   return stars.map((_, index)=>{
+//     return(
+//       <div data-orientation="horizontal">
+//          < Star
+//           key={index}
+//           className=""
+//           color= {(rating)>index? "Orange": "gray"}
+//           />
+//       </div>
+//    )
+
+//   })
+// }
+  return(
+    <div>
+      <ProfileContainer>
+        <h1 className="text-5xl text-center py-5">Profile </h1>
+        <ProfileMain
+          userType={userData.type}
+          userName={userData.name}
+          bookingsCompleted={userData.bc}
+          years={userData.years}
+          rating={userData.rating}
+          bookings={userData.bookings.length}
+          location={userData.location}
+          image={userData.image}
+        />
+        <BookingSnippet>
+           { bookings.map((booking, index)=>{
+            return <BookingCard
+                key={index}
+                name={booking.name}
+                status={booking.status}
+                date={convertDate(booking.date)}
+                details={booking.details}
+                rating={booking.rating}
+               />
+
+            })}
+
+        </BookingSnippet>
+      </ProfileContainer>
+    </div>
+  )
+
+}
+
+export default ProfilePage

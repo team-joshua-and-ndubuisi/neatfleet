@@ -1,4 +1,4 @@
-import { LoginBodyT } from "../authTypes";
+import { AuthResponseT, LoginBodyT } from "../authTypes";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,12 +12,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../stores";
 
 interface LoginFormProps {
-  apiCall: (userCredentials: LoginBodyT) => Promise<void>;
+  apiCall: (userCredentials: LoginBodyT) => Promise<AuthResponseT>;
 }
 
 const LoginForm = ({ apiCall }: LoginFormProps) => {
+  const { initAuth } = useAuthStore()
   return (
     <form
       className="max-w-md w-full p-6"
@@ -29,7 +31,8 @@ const LoginForm = ({ apiCall }: LoginFormProps) => {
         const email = form.email.value;
         const password = form.password.value;
 
-        apiCall({ email, password });
+        const data = await apiCall({ email, password });
+        initAuth(data)
       }}>
       <Card className="w-full max-w-sm">
         <CardHeader>
